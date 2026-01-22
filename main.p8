@@ -6,6 +6,7 @@ __lua__
 #include text_crawl.lua
 #include draw_util.lua
 #include sprites.lua
+#include global.lua
 #include dialogue.lua
 
 state = 0
@@ -64,7 +65,7 @@ function _draw()
     return
   end
   dialogue:draw()
-  print("S" .. state, 90, 100, 7)
+  draw_hud()
 end
 
 __gfx__

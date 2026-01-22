@@ -1,5 +1,5 @@
 function dialogue_new(string, tools)
-  local x, y, w, h = 4, 58, 120, 66
+  local x, y, w, h = 2, 58, 124, 66
   local transition_dur = 0.5
   local pages = {}
   local page_idx = 1
@@ -53,7 +53,7 @@ function dialogue_new(string, tools)
 
     for page in all(pages) do
       page.title = rich_text_parse(page.title)
-      page.body = text_crawl_new(page.body, w - 8)
+      page.body = text_crawl_new(page.body, w - 10)
 
       if #page.options == 0 then
         add(page.options, "Continue")

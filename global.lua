@@ -7,7 +7,9 @@ global = {
   max_mp = 0,
   item_count = 0,
   max_item_count = 3,
-  money = 0
+  money = 0,
+  spells = { false, false, false },
+  flags = {}
 }
 
 function draw_hud()

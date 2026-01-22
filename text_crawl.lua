@@ -1,5 +1,5 @@
 function text_crawl_new(string, w)
-  local delay = 0.03
+  local delay = 0.04
   local tokens = rich_text_parse(string, w)
   local t0 = 0
   local next_token_idx = 1

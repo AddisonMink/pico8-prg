@@ -64,7 +64,7 @@ function _draw()
     return
   end
   dialogue:draw()
-  print("State: " .. state, 90, 100, 7)
+  print("S" .. state, 90, 100, 7)
 end
 
 __gfx__

@@ -1,3 +1,9 @@
+function tint_palette(color)
+  for i = 0, 15 do
+    pal(i, color)
+  end
+end
+
 function draw_background(id)
   for i = 0, 8 do
     spr(id, i * 16, 12, 2, 2)

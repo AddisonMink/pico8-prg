@@ -9,6 +9,11 @@ __lua__
 #include global.lua
 #include dialogue.lua
 #include dialogues.lua
+#include item.lua
+#include equipment.lua
+#include spell.lua
+#include enemy.lua
+#include battle.lua
 
 dialogue = wizard
 result = nil

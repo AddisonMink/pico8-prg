@@ -1,5 +1,5 @@
 function dialogue_new(string, tools)
-  local x, y, w, h = 4, 44, 120, 80
+  local x, y, w, h = 4, 58, 120, 66
   local transition_dur = 0.5
   local pages = {}
   local page_idx = 1
@@ -19,9 +19,6 @@ function dialogue_new(string, tools)
           title = "",
           body = "",
           options = {},
-          callback = nil,
-          screen_transition = false,
-          text_crawl_done = false,
           option_idx = 1
         }
         in_body = false
@@ -36,6 +33,10 @@ function dialogue_new(string, tools)
           current_page.callback = sub(line, 11)
         elseif sub(line, 1, 18) == "@screen_transition" then
           current_page.screen_transition = true
+        elseif sub(line, 1, 11) == "@background" then
+          current_page.background = sub(line, 13)
+        elseif sub(line, 1, 4) == "@npc" then
+          current_page.npc = sub(line, 6)
         elseif in_body then
           if current_page.body == "" then
             current_page.body = line
@@ -128,6 +129,12 @@ function dialogue_new(string, tools)
     local page = pages[page_idx]
     local x, y = x, y
     local option_y = y + h - (#page.options * 10)
+
+    if page.background then
+      draw_background(background[page.background])
+    end
+
+    draw_npcs(npc[page.npc])
 
     draw_panel(1, x, y, w, h)
     x += 4

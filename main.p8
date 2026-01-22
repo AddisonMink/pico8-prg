@@ -4,7 +4,8 @@ __lua__
 #include nineslice.lua
 #include rich_text.lua
 #include text_crawl.lua
-#include screen_transition.lua
+#include draw_util.lua
+#include sprites.lua
 #include dialogue.lua
 
 state = 0
@@ -12,10 +13,11 @@ state = 0
 dialogue = dialogue_new(
   [[
 @page
+@background forest
+@npc fairies
 @title <c6>NARRATOR<r>
 @body
-Body text goes here. It can be pretty long, but
-it will wrap properly within the dialogue box.
+Body text goes here. It can be pretty long.
 @body
 @option Continue
 @option Skip Next Page
@@ -46,8 +48,6 @@ Callbacks can modify the dialogue flow.
   }
 )
 
-
-
 result = nil
 dialogue:load()
 
@@ -58,7 +58,7 @@ function _update()
 end
 
 function _draw()
-  cls(2)
+  cls()
   if result then
     print("You selected: " .. result)
     return

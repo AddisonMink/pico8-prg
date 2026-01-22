@@ -8,6 +8,7 @@ global = {
   item_count = 0,
   max_item_count = 3,
   money = 0,
+  items = { 0, 0, 0 },
   spells = { false, false, false },
   flags = {}
 }

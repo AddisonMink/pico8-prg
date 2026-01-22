@@ -13,9 +13,10 @@ __lua__
 #include equipment.lua
 #include spell.lua
 #include enemy.lua
+#include battle_menu.lua
 #include battle.lua
 
-dialogue = wizard
+dialogue = battle_menu_new()
 result = nil
 dialogue:load()
 

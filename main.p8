@@ -4,6 +4,7 @@ __lua__
 #include nineslice.lua
 #include rich_text.lua
 #include text_crawl.lua
+#include screen_transition.lua
 #include dialogue.lua
 
 state = 0
@@ -15,13 +16,12 @@ dialogue = dialogue_new(
 @body
 Body text goes here. It can be pretty long, but
 it will wrap properly within the dialogue box.
-<n>
-There can be several paragraphs, too.
 @body
 @option Continue
 @option Skip Next Page
 @option End Dialogue
 @callback increment_state
+@screen_transition
 
 @page
 @title <c6>NARRATOR<r>
@@ -58,7 +58,7 @@ function _update()
 end
 
 function _draw()
-  cls()
+  cls(2)
   if result then
     print("You selected: " .. result)
     return

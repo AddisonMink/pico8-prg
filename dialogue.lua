@@ -1,9 +1,17 @@
 function dialogue_new(string, tools)
+  local x, y, w, h = 4, 44, 120, 80
   local pages = {}
   local page_idx = 1
   local text_crawl_done = false
   local option_idx = 1
   local me = {}
+
+  -- Transition state
+  local state = "normal"
+  -- "normal", "fade_out", "fade_in"
+  local transition_progress = 0
+  local transition_duration = 1.0
+  -- seconds for full fade
 
   local current_page = nil
   local in_body = false
@@ -17,7 +25,8 @@ function dialogue_new(string, tools)
         title = "",
         body = "",
         options = {},
-        callback = nil
+        callback = nil,
+        screen_transition = false
       }
       in_body = false
     elseif current_page then
@@ -29,6 +38,8 @@ function dialogue_new(string, tools)
         add(current_page.options, sub(line, 9))
       elseif sub(line, 1, 9) == "@callback" then
         current_page.callback = sub(line, 11)
+      elseif sub(line, 1, 18) == "@screen_transition" then
+        current_page.screen_transition = true
       elseif in_body then
         if current_page.body == "" then
           current_page.body = line
@@ -45,7 +56,7 @@ function dialogue_new(string, tools)
 
   for page in all(pages) do
     page.title = rich_text_parse(page.title)
-    page.body = text_crawl_new(page.body)
+    page.body = text_crawl_new(page.body, w - 8)
 
     if #page.options == 0 then
       add(page.options, "Continue")
@@ -59,10 +70,29 @@ function dialogue_new(string, tools)
   function me:load()
     page_idx = 1
     option_idx = 1
+    state = "normal"
+    transition_progress = 0
     if #pages > 0 then
       pages[page_idx].body:load()
     end
     text_crawl_done = false
+  end
+
+  local function advance_to_next_page()
+    if page_idx < #pages then
+      page_idx += 1
+      option_idx = 1
+      pages[page_idx].body:load()
+      text_crawl_done = false
+    else
+      return true -- dialogue is complete
+    end
+    return false
+  end
+
+  local function start_transition()
+    state = "fade_out"
+    transition_progress = 0
   end
 
   function me:update()
@@ -70,6 +100,28 @@ function dialogue_new(string, tools)
 
     local page = pages[page_idx]
 
+    -- Handle transition states
+    if state == "fade_out" then
+      transition_progress += 1 / (transition_duration * 30) -- assuming 30 FPS
+      if transition_progress >= 1 then
+        transition_progress = 0
+        state = "fade_in"
+        local is_complete = advance_to_next_page()
+        if is_complete then
+          return option_idx
+        end
+      end
+      return
+    elseif state == "fade_in" then
+      transition_progress += 1 / (transition_duration * 30)
+      if transition_progress >= 1 then
+        transition_progress = 0
+        state = "normal"
+      end
+      return
+    end
+
+    -- Normal state handling
     if text_crawl_done then
       if btnp(2) then
         option_idx = (option_idx - 2) % #page.options + 1
@@ -87,6 +139,8 @@ function dialogue_new(string, tools)
           option_idx = 1
           pages[page_idx].body:load()
           text_crawl_done = false
+        elseif page.screen_transition and page_idx < #pages then
+          start_transition()
         elseif page_idx < #pages then
           page_idx += 1
           option_idx = 1
@@ -101,23 +155,44 @@ function dialogue_new(string, tools)
     end
   end
 
-  function me:draw()
-    if #pages == 0 then return end
-
+  local function draw_current_page()
     local page = pages[page_idx]
+    local x, y = x, y
+    local option_y = y + h - (#page.options * 10)
 
-    rich_text_print(page.title, 0, 0)
-    page.body:draw(0, 10)
+    draw_panel(1, x, y, w, h)
+    x += 4
+    y += 5
+    rich_text_print(page.title, x, y)
+    y += 10
+    page.body:draw(x, y)
 
     if not text_crawl_done then return end
 
-    local y = 128 - (#page.options * 10)
+    local y = option_y
     for i, option in ipairs(page.options) do
-      rich_text_print(option, 10, y)
+      rich_text_print(option, x + 10, y)
       if i == option_idx then
-        spr(16, 0, y)
+        spr(16, x, y)
       end
       y += 10
+    end
+  end
+
+  local function draw_next_page()
+    local page = pages[page_idx]
+    rich_text_print(page.title, 0, 0)
+  end
+
+  function me:draw()
+    if #pages == 0 then return end
+
+    if state == "fade_out" then
+      screen_fade_out(function() draw_current_page() end, transition_progress)
+    elseif state == "fade_in" then
+      screen_fade_in(function() draw_next_page() end, transition_progress)
+    else
+      draw_current_page()
     end
   end
 

@@ -40,11 +40,13 @@ Callbacks can modify the dialogue flow.
   {
     increment_state = function(index)
       state += 1
-      return index == 2 and 3
-          or index == 3 and -1
+      return index == 2 and { page = 3 }
+          or index == 3 and { result = "ended early" }
     end
   }
 )
+
+
 
 result = nil
 dialogue:load()

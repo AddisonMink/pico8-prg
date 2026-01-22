@@ -76,14 +76,14 @@ function dialogue_new(string, tools)
       elseif btnp(3) then
         option_idx = option_idx % #page.options + 1
       elseif btnp(4) then
-        local next_page = nil
+        local callback_result = nil
         if page.callback then
-          next_page = tools[page.callback](option_idx)
+          callback_result = tools[page.callback](option_idx)
         end
-        if next_page == -1 then
-          return option_idx
-        elseif next_page then
-          page_idx = next_page
+        if callback_result and callback_result.result then
+          return callback_result.result
+        elseif callback_result and callback_result.page then
+          page_idx = callback_result.page
           option_idx = 1
           pages[page_idx].body:load()
           text_crawl_done = false

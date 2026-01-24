@@ -16,7 +16,7 @@ __lua__
 #include battle_menu.lua
 #include battle.lua
 
-dialogue = battle_menu_new()
+dialogue = battle_new(enemy_goblin)
 result = nil
 dialogue:load()
 

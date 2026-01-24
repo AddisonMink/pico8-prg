@@ -8,6 +8,7 @@ background = {
 
 npc = {
   player = { sx = 24, sy = 0 },
+  battle_player = { sx = 24, sy = 32 },
   townsman = { sx = 40, sy = 0 },
   wizard = { sx = 56, sy = 0 },
   priestess = { sx = 72, sy = 0 },

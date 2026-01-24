@@ -1,8 +1,8 @@
 function battle_new(enemy, alternate_win_test)
-  local animations = {
-    slash = { sx = 32, sy = 16 },
-    fire = { sx = 0, sy = 32 },
-    poof = { sx = 32, sy = 80 }
+  animations = {
+    slash = { sx = 24, sy = 48 },
+    fire = { sx = 72, sy = 48 },
+    poof = { sx = 0, sy = 64 }
   }
 
   local status_sprites = {
@@ -18,7 +18,6 @@ function battle_new(enemy, alternate_win_test)
 
   local attack_animation = { 16, 32, 56, 56 }
 
-  local menu = battle_menu_new()
   local state = nil
   local me = {}
 
@@ -48,7 +47,7 @@ function battle_new(enemy, alternate_win_test)
         effects = effects
       }
     else
-      next_state = { select_action = true }
+      next_state = { select_action = true, menu = battle_menu_new() }
     end
 
     local effects = {}
@@ -85,7 +84,7 @@ function battle_new(enemy, alternate_win_test)
   end
 
   local function select_action()
-    local result = menu:update()
+    local result = state.menu:update()
     if not result then return end
 
     local effects = {}
@@ -262,20 +261,22 @@ function battle_new(enemy, alternate_win_test)
       local progress = (time() - state.t0) / state.dur
       local frame = min(3, flr(progress * 4)) + 1
       local offset_sx = attack_animation[frame]
-      local sx = fighter.sx + offset_sx
+      local sx = fighter.sprite.sx + offset_sx
       local x = sprite_x + (frame == 1 and 0 or -12)
       local w = frame == 1 and 16 or 24
-      sspr(sx, fighter.sy, w, 16, x, y, w * 2, 32)
+      sspr(sx, fighter.sprite.sy, w, 16, x, y, w * 2, 32)
     else
       local tint = flash or fighter.status.invisible and 2
+      local sx = fighter.sprite.sx
+      local sy = fighter.sprite.sy
+
       if tint then
         tint_palette(tint)
       end
-      sspr(fighter.sx, fighter.sy, size, size, sprite_x, y, size * 2, size * 2)
+
+      sspr(sx, sy, size, size, sprite_x, y, size * 2, size * 2)
       pal()
     end
-
-    draw_hp_bar(x + size, hp_y, fighter.hp)
 
     if animation then
       local progress = (time() - state.t0) / state.dur
@@ -289,6 +290,8 @@ function battle_new(enemy, alternate_win_test)
       local color = progress < 0.1 and 5 or progress > 0.9 and 5 or 7
       print(message, x - #message * 2 + size, y - 8, color)
     end
+
+    draw_hp_bar(x + size, hp_y, fighter.hp)
 
     local num_status = 0
     for _, dur in pairs(fighter.status) do
@@ -304,7 +307,6 @@ function battle_new(enemy, alternate_win_test)
   end
 
   function me:load()
-    menu:load()
     enemy.hp = enemy.max_hp
     enemy.state = "alive"
     enemy.status = {}

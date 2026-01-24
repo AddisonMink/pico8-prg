@@ -1,7 +1,8 @@
 enemy_goblin = {
-  name = "goblin",
   hp = 4,
+  max_hp = 4,
   status = {},
+  sprite = npc.goblin,
   offset_x = -2,
   background = background.forest,
   behavior = function(player, enemy)
@@ -10,9 +11,10 @@ enemy_goblin = {
 }
 
 enemy_goblin_warrior = {
-  name = "goblin warrior",
   hp = 4,
+  max_hp = 4,
   status = {},
+  sprite = npc.goblin_warrior,
   offset_x = -2,
   background = background.forest,
   init = function(enemy)
@@ -24,9 +26,10 @@ enemy_goblin_warrior = {
 }
 
 enemy_goblin_mage = {
-  name = "goblin mage",
   hp = 4,
+  max_hp = 4,
   status = {},
+  sprite = npc.goblin_mage,
   offset_x = -4,
   background = background.forest,
   init = function(enemy)
@@ -47,10 +50,10 @@ enemy_goblin_mage = {
 }
 
 enemy_zombie = {
-  name = "zombie",
   hp = 1,
   max_hp = 1,
   status = {},
+  sprite = npc.zombie,
   offset_x = -2,
   background = background.graveyard,
   init = function(enemy)
@@ -62,9 +65,10 @@ enemy_zombie = {
 }
 
 enemy_ghost = {
-  name = "ghost",
   hp = 1,
+  max_hp = 1,
   status = {},
+  sprite = npc.ghost,
   offset_x = 0,
   background = background.graveyard,
   init = function(enemy)
@@ -86,11 +90,12 @@ enemy_ghost = {
 }
 
 enemy_dragon = {
-  name = "dragon",
   hp = 10,
+  max_hp = 10,
   status = {},
   offset_x = 0,
   background = background.forest,
+  sprite = npc.dragon,
   init = function(enemy)
     enemy.status.enchanted = 4
   end,
@@ -103,12 +108,13 @@ enemy_dragon = {
 }
 
 enemy_dark_elf = {
-  name = "sage",
   hp = 10,
+  max_hp = 10,
   status = {},
   offset_x = -8,
   big = true,
   background = nil,
+  sprite = npc.sage,
   init = function(enemy)
   end,
   behavior = function(player, enemy)

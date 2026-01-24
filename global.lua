@@ -1,6 +1,10 @@
 global = {
-  player = {
-    hp = 10
+  player = {    
+    hp = 10,
+    max_hp = 10,
+    status = {},
+    sprite = npc.battle_player,
+    offset_x = -6
   },
   max_hp = 10,
   mp = 0,
@@ -10,6 +14,7 @@ global = {
   money = 0,
   items = { 0, 0, 0 },
   spells = { false, false, false },
+  equipment = { false, false, false },
   flags = {}
 }
 

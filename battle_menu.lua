@@ -14,7 +14,7 @@ function battle_menu_new()
   }
 
   local spell_state = {
-    title = rich_text_parse("SPELL"),
+    title = rich_text_parse("<c12>SPELL"),
     options = {
       {
         name = rich_text_parse(spell_candle.name .. " <c12>" .. spell_candle.mp_cost .. "MP"),
@@ -35,7 +35,7 @@ function battle_menu_new()
   }
 
   local item_state = {
-    title = rich_text_parse("ITEM"),
+    title = rich_text_parse("<c15>ITEM"),
     options = {
       {
         name = rich_text_parse(item_shield.name .. " <r>x" .. global.items[1]),

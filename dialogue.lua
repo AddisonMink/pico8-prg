@@ -1,4 +1,4 @@
-function dialogue_new(string, tools)
+function dialogue_new(load, string, tools)
   local x, y, w, h = 2, 58, 124, 66
   local transition_dur = 0.5
   local pages = {}
@@ -73,7 +73,7 @@ function dialogue_new(string, tools)
   end
 
   function me:load()
-    page_idx = 1
+    page_idx = load() or 1
     state = { normal = true }
     init_page()
   end

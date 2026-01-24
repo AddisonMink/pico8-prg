@@ -1,4 +1,71 @@
+townsman = dialogue_new(
+  function() return global.flags.fairy1 and 2 end,
+  [[
+@page
+@background town
+@npc townsman
+@title <c15>TOWNSMAN<r>
+@body
+Please take whatever <c15>ITEMS<r> you can carry!
+<n><n>
+If you find any <c10>$<r>, I'll trade <c6>EQUIPMENT<r> for them.
+@body
+@option Continue
+@callback go_to_hint
+
+@page
+@background town
+@npc townsman
+@title <c15>TOWNSMAN<r>
+@body
+A kindly <c12>WIZARD<r> lives in the tower by the lake. He may know
+the whereabouts of the missing <c9>FAIRIES<r>.
+@body
+@option Leave
+@callback leave
+
+@page
+@background town
+@npc townsman
+@title <c15>TOWNSMAN<r>
+@body
+A <c14>PRIESTESS<r> lives out in the <c5>STONEFIELD<r> beyond the <c11>FOREST<r>. She knows how to break <c13>ENCHANTMENTS<r>.
+@body
+@option Continue
+
+@page
+@background town
+@npc townsman
+@title <c15>TOWNSMAN<r>
+@body
+If you go to visit her, beware of the <c2>CURSED BEINGS<r> that haunt the <c5>STONEFIELD<r>.
+@body
+@option Leave
+@callback leave
+
+@page
+@background town
+@npc townsman
+@title <c15>TOWNSMAN<r>
+@body
+Good luck!
+@body
+@option Leave
+@callback leave
+]],
+  {
+    go_to_hint = function()
+      local page = not global.flags.wizard and 2
+          or not global.flags.temple and 3
+          or 5
+      return { page = page }
+    end,
+    leave = function() return { result = true } end
+  }
+)
+
 wizard = dialogue_new(
+  function() return global.flags.wizard and 7 end,
   [[
 @page
 @background tower
@@ -85,6 +152,7 @@ The <c3>GOBLINS<r> have been hunting us, but some <c9>FAIRIES<r> still survive! 
 )
 
 fairy1 = dialogue_new(
+  function() return global.flags.fairy1 and 2 end,
   [[
 @page
 @background forest
@@ -119,6 +187,7 @@ We do not want to be changed!
 )
 
 fairy2 = dialogue_new(
+  function() return global.flags.fairy2 and 2 end,
   [[
 @page
 @background forest
@@ -153,6 +222,7 @@ We cower in fear of it.
 )
 
 fairy3 = dialogue_new(
+  function() return global.flags.fairy3 and 2 end,
   [[
 @page
 @background forest
@@ -187,6 +257,7 @@ The <c11>FOREST<r> will die.
 )
 
 priestess = dialogue_new(
+  function() return global.flags.temple and 6 end,
   [[
 @page
 @background temple
@@ -263,6 +334,7 @@ The <c14>PRAYER<r> I taught you can break all manner of foul <c13>ENCHANTMENTS<r
 )
 
 sage = dialogue_new(
+  function() return global.flags.sage and 5 end,
   [[
 @page
 @npc sage

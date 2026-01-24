@@ -17,7 +17,7 @@ __lua__
 #include battle.lua
 #include item_shop.lua
 
-dialogue = item_shop_new()
+dialogue = townsman
 result = nil
 dialogue:load()
 

@@ -15,9 +15,9 @@ __lua__
 #include enemy.lua
 #include battle_menu.lua
 #include battle.lua
+#include item_shop.lua
 
-global.equipment = { true, true, true }
-dialogue = battle_new(enemy_zombie)
+dialogue = item_shop_new()
 result = nil
 dialogue:load()
 

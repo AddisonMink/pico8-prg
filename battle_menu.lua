@@ -1,7 +1,6 @@
 function battle_menu_new()
   local x, y, w, h = 10, 88, 108, 34
   local index_i, index_j = 1, 1
-  global.items = { 1, 2, 0 }
 
   local action_state = {
     title = rich_text_parse("ACTION"),

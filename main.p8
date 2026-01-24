@@ -8,14 +8,14 @@ __lua__
 #include sprites.lua
 #include global.lua
 #include dialogue.lua
-#include dialogues.lua
 #include item.lua
+#include item_shop.lua
+#include dialogues.lua
 #include equipment.lua
 #include spell.lua
 #include enemy.lua
 #include battle_menu.lua
 #include battle.lua
-#include item_shop.lua
 
 dialogue = townsman
 result = nil

@@ -37,6 +37,8 @@ function dialogue_new(load, string, tools)
           current_page.background = sub(line, 13)
         elseif sub(line, 1, 4) == "@npc" then
           current_page.npc = sub(line, 6)
+        elseif sub(line, 1, 14) == "@state_machine" then
+          current_page.state_machine = sub(line, 16)
         elseif in_body then
           if current_page.body == "" then
             current_page.body = line
@@ -67,9 +69,13 @@ function dialogue_new(load, string, tools)
 
   local function init_page()
     local page = pages[page_idx]
-    pages[page_idx].body:load()
-    pages[page_idx].text_crawl_done = false
-    pages[page_idx].option_idx = 1
+    page.body:load()
+    page.text_crawl_done = false
+    page.option_idx = 1
+    page.state_machine_result = nil
+    if page.state_machine then
+      tools[page.state_machine]:load()
+    end
   end
 
   function me:load()
@@ -89,11 +95,33 @@ function dialogue_new(load, string, tools)
     end
   end
 
+  local function advance_to_next_page()
+    local page = pages[page_idx]
+    local callback_result = nil
+    if page.callback then
+      callback_result = tools[page.callback](page.option_idx)
+    end
+
+    if callback_result and callback_result.result then
+      return callback_result.result
+    elseif callback_result and callback_result.page then
+      advance_to_page(callback_result.page)
+    elseif page_idx < #pages then
+      advance_to_page(page_idx + 1)
+    else
+      return page.option_idx
+    end
+  end
+
   function me:update()
     if #pages == 0 then return end
     local page = pages[page_idx]
 
-    if state.fade_in and time() - state.fade_in > transition_dur then
+    if page.state_machine and not page.state_machine_result then
+      page.state_machine_result = tools[page.state_machine]:update()
+    elseif page.state_machine and page.state_machine_result then
+      return advance_to_next_page()
+    elseif state.fade_in and time() - state.fade_in > transition_dur then
       state = { normal = true }
     elseif state.normal and page.text_crawl_done then
       if btnp(2) then
@@ -101,20 +129,7 @@ function dialogue_new(load, string, tools)
       elseif btnp(3) then
         page.option_idx = page.option_idx % #page.options + 1
       elseif btnp(4) then
-        local callback_result = nil
-        if page.callback then
-          callback_result = tools[page.callback](page.option_idx)
-        end
-
-        if callback_result and callback_result.result then
-          return callback_result.result
-        elseif callback_result and callback_result.page then
-          advance_to_page(callback_result.page)
-        elseif page_idx < #pages then
-          advance_to_page(page_idx + 1)
-        else
-          return page.option_idx
-        end
+        return advance_to_next_page()
       end
     elseif state.normal then
       page.text_crawl_done = page.body:update()
@@ -127,6 +142,12 @@ function dialogue_new(load, string, tools)
 
   local function draw_page()
     local page = pages[page_idx]
+
+    if page.state_machine then
+      tools[page.state_machine]:draw()
+      return
+    end
+
     local x, y = x, y
     local option_y = y + h - (#page.options * 10)
 

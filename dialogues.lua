@@ -11,6 +11,9 @@ Please take whatever <c15>ITEMS<r> you can carry!
 If you find any <c10>$<r>, I'll trade <c6>EQUIPMENT<r> for them.
 @body
 @option Continue
+
+@page
+@state_machine item_shop
 @callback go_to_hint
 
 @page
@@ -54,10 +57,11 @@ Good luck!
 @callback leave
 ]],
   {
+    item_shop = item_shop_new(),
     go_to_hint = function()
-      local page = not global.flags.wizard and 2
-          or not global.flags.temple and 3
-          or 5
+      local page = not global.flags.wizard and 3
+          or not global.flags.temple and 4
+          or 6
       return { page = page }
     end,
     leave = function() return { result = true } end

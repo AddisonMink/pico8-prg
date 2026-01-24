@@ -16,26 +16,19 @@ __lua__
 #include battle_menu.lua
 #include battle.lua
 #include dialogues.lua
+#include text_crawls.lua
 
-
-dialogue = dark_elf
+dialogue = good_ending_text_crawl
 result = nil
 dialogue:load()
 
 function _update()
-  if not result then
-    result = dialogue:update()
-  end
+  result = dialogue:update()
 end
 
 function _draw()
   cls()
-  if result then
-    print("You selected: " .. result)
-    return
-  end
-  dialogue:draw()
-  draw_hud()
+  dialogue:draw(0, 0)
 end
 
 __gfx__

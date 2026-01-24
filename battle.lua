@@ -6,14 +6,14 @@ function battle_new(enemy, alternate_win_test)
   }
 
   local status_sprites = {
-    armor = 42,
-    strength = 43,
-    burn = 59,
-    invisible = 58,
-    undead = 45,
-    dispel = 44,
-    dragon_burn = 46,
-    enchanted = 60
+    armor = 161,
+    strength = 160,
+    burn = 176,
+    invisible = 163,
+    undead = 162,
+    dispel = 177,
+    dragon_burn = 179,
+    enchanted = 164
   }
 
   local attack_animation = { 16, 32, 56, 56 }
@@ -230,8 +230,8 @@ function battle_new(enemy, alternate_win_test)
     local width = n + n - 1
 
     spr(i, x, y)
-    y += 8
-    x = x - width / 2 + 4
+    y += 6
+    x = x - width / 2 + 2
     for j = 1, n do
       rectfill(x, y, x, y, 7)
       x += 2
@@ -298,11 +298,14 @@ function battle_new(enemy, alternate_win_test)
       num_status += 1
     end
 
-    local status_x = x + size - (num_status * 8) / 2
+    local status_width = num_status * 5
+    local status_padding = max(0, num_status-1) * 2
+
+    local status_x = x + size - (status_width + status_padding) / 2
 
     for status, dur in pairs(fighter.status) do
       draw_status(status_x, status_y, status_sprites[status], dur)
-      status_x += 8
+      status_x += 7
     end
   end
 

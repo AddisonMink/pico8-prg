@@ -485,3 +485,90 @@ What will you do?
     end
   }
 )
+
+dark_elf = dialogue_new(
+  function() end,
+  [[
+@page
+@background graveyard
+@npc sage
+@title <c6>NARRATOR<r>
+@body
+The <c13>SAGE<r> prances madly in the <c5>STONEFIELD<r>, cackling with glee.
+@body
+@option Continue
+
+@page
+@background graveyard
+@npc sage
+@title <c13>DARK ELF<r>
+@body
+I <c8>RENOUNCE<r> my stewardship of this land! This <c8>PATHETIC NURSERY<r> will gall me no longer!
+@body
+@option Continue
+
+@page
+@background graveyard
+@npc sage
+@title <c13>DARK ELF<r>
+@body
+When the <c9>FAIRIES<r> have all turned, there will be nothing left for you here!
+<n>
+@body
+@option Continue
+
+@page
+@background graveyard
+@npc sage
+@title <c13>DARK ELF<r>
+@body
+You should have left for the <c5>STONEFIELD<r>! There may have been something beyond it!
+<n>
+Now, there is only <c8>DEATH<r>!
+@body
+@option Fight
+@screen_transition
+
+@page
+@state_machine fight
+@callback post_fight
+@screen_transition
+
+@page
+@background graveyard
+@npc sage
+@title <c13>DARK ELF<r>
+@body
+You have grown <c8>STRONG<r>! Will you use your strength to buy back your <c8>PATHETIC LITTLE LIFE<r>?
+@body
+@option Continue
+
+@page
+@background graveyard
+@npc sage
+@title <c13>DARK ELF<r>
+@body
+Having tasted <c8>POWER<r>, do you not desire something <c8>GREATER<r>?
+@body
+@option Continue
+@screen_transition
+
+@page
+@background graveyard
+@title <c6>NARRATOR<r>
+@body
+The <c13>DARK ELF<r>'s ashen remains blow away on the wind, out over the <c5>STONEFIELD<r>.
+@body
+@option Leave
+@callback good_ending
+]],
+  {
+    fight = battle_new(enemy_dark_elf),
+    post_fight = function(battle_result)
+      return battle_result.defeat and { result = "game_over" }
+    end,
+    good_ending = function()
+      return { result = "good_ending" }
+    end
+  }
+)

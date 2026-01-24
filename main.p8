@@ -18,7 +18,7 @@ __lua__
 #include dialogues.lua
 
 
-dialogue = stonefield
+dialogue = dark_elf
 result = nil
 dialogue:load()
 

@@ -32,7 +32,7 @@ the whereabouts of the missing <c9>FAIRIES<r>.
 @npc townsman
 @title <c15>TOWNSMAN<r>
 @body
-A <c14>PRIESTESS<r> lives out in the <c5>STONEFIELD<r> beyond the <c11>FOREST<r>. She knows how to break <c13>ENCHANTMENTS<r>.
+A <c14>PRIESTESS<r> lives out in the <c2>STONEFIELD<r> beyond the <c11>FOREST<r>. She knows how to break <c13>ENCHANTMENTS<r>.
 @body
 @option Continue
 
@@ -41,7 +41,7 @@ A <c14>PRIESTESS<r> lives out in the <c5>STONEFIELD<r> beyond the <c11>FOREST<r>
 @npc townsman
 @title <c15>TOWNSMAN<r>
 @body
-If you go to visit her, beware of the <c2>CURSED BEINGS<r> that haunt the <c5>STONEFIELD<r>.
+If you go to visit her, beware of the <c2>CURSED BEINGS<r> that haunt the <c2>STONEFIELD<r>.
 @body
 @option Leave
 @callback leave
@@ -280,7 +280,7 @@ You also found <c10>$2<r>!
 @npc priestess
 @title <c14>PRIESTESS<r>
 @body
-The <c13>SAGE<r> built this <c14>TEMPLE<r> at the edge of the <c11>FOREST<r> to protect it from the <c2>CURSED BEINGS<r> of the <c5>STONEFIELD<r>.
+The <c13>SAGE<r> built this <c14>TEMPLE<r> at the edge of the <c11>FOREST<r> to protect it from the <c2>CURSED BEINGS<r> of the <c2>STONEFIELD<r>.
 @body
 @option Continue
 
@@ -369,7 +369,7 @@ But do you not tire of your childhood? Do your <c8>PETTY COMFORTS<r> not wrankle
 @npc sage
 @title <c13>SAGE<r>
 @body
-Leave this <c3>DYING PLACE<r>! Go north, to the <c5>STONEFIELD<r>! You will grow <c8>STRONG<r>, if nothing else.
+Leave this <c3>DYING PLACE<r>! Go north, to the <c2>STONEFIELD<r>! You will grow <c8>STRONG<r>, if nothing else.
 @body
 @option Continue
 @screen_transition
@@ -453,6 +453,35 @@ The <c12>DRAGON<r> is gone.
     end,
     leave = function()
       return { result = true }
+    end
+  }
+)
+
+stonefield = dialogue_new(
+  function() end,
+  [[
+@page
+@background graveyard
+@title <c6>NARRATOR<r>
+@body
+You approach the <c13>SPLIT GATE<r>. The <c2>STONEFIELD<r> extends to the horizon. Is there anything beyond it?
+@body
+@option Continue
+
+@page
+@background graveyard
+@title <c6>NARRATOR<r>
+@body
+What will you do?
+@body
+@option Go through the gate.
+@option Turn back.
+@callback bad_ending
+]],
+  {
+    bad_ending = function(idx)
+      return idx == 1 and { result = "bad_ending" }
+          or idx == 2 and { result = true }
     end
   }
 )

@@ -17,10 +17,8 @@ __lua__
 #include battle.lua
 #include dialogues.lua
 
-global.mp = 2
-global.spells[2] = true
 
-dialogue = dragon
+dialogue = stonefield
 result = nil
 dialogue:load()
 

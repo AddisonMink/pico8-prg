@@ -29,7 +29,7 @@ function text_crawl_new(string, w)
     end
   end
 
-  function me:draw(x, y)
+  function me:draw(x, y, outline)
     local start_x, color = x, 7
 
     for i, token in ipairs(tokens) do
@@ -37,6 +37,13 @@ function text_crawl_new(string, w)
         rich_text_draw_token(token, start_x, color, x, y, 5)
         break
       else
+        if outline then
+          for x = x - 1, x + 1 do
+            for y = y - 1, y + 1 do
+              rich_text_draw_token(token, start_x, 0, x, y)
+            end
+          end
+        end
         x, y, color = rich_text_draw_token(token, start_x, color, x, y)
       end
     end

@@ -18,7 +18,7 @@ __lua__
 #include dialogues.lua
 #include text_crawls.lua
 
-dialogue = good_ending_text_crawl
+dialogue = opening_text_crawl
 result = nil
 dialogue:load()
 
@@ -28,7 +28,24 @@ end
 
 function _draw()
   cls()
+
+  rectfill(0, 0, 127, 27, 13)
+  rectfill(0, 24, 127, 27, 14)
+  circfill(91, 27, 8, 14)
+  circfill(91, 27, 4, 8)
+  rectfill(0, 28, 127, 127, 0)
+
   map()
+  for x = 0, 127 do
+    for y = 0, 127 do
+      local dark = y % 2 == 0 and x % 2 == 0
+          or y % 2 == 1 and x % 2 == 1
+
+      if dark then
+        pset(x, y, 5)
+      end
+    end
+  end
   dialogue:draw(0, 0)
 end
 

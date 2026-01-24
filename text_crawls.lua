@@ -37,7 +37,7 @@ function big_text_crawl_new(text)
   end
 
   function me:draw()
-    pages[page_idx]:draw(4, 4)
+    pages[page_idx]:draw(4, 4, true)
   end
 
   initialize()
@@ -68,14 +68,14 @@ bad_ending_text_crawl = big_text_crawl_new([[
 <n><n>
 You leave the dying <c11>FOREST<r> behind and set out into the <c5>STONEFIELD<r>.
 The <c11>FOREST<r> and the <c11>ELFS<r> will die as you <c8>STRUGGLE<r> and <c8>FIGHT<r> through the
-<c2>CURSED LANDS<r>. 
+<c2>CURSED LANDS<r>.
 <n><n>
 Still, maybe there is something for you beyond the <c14>HORIZON<r>.
 ]])
 
 good_ending_text_crawl = big_text_crawl_new([[
 @page
-<n>
+<n><n>
 The <c13>SAGE<r> is gone, and the <c13>CORRUPTION<r> of the <c11>FOREST<r> has ceased. The
 <c3>GOBLINS<r> and the <c2>CURSED BEINGS<r> will forever haunt your home, and the lost parts of the
 <c11>FOREST<r> will never be restored.

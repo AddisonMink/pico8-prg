@@ -33,8 +33,6 @@ function battle_new(enemy, alternate_win_test)
   end
 
   local function start_turn()
-    menu = battle_menu_new()
-
     local next_state = nil
     if state.actor == enemy then
       local message, effects = enemy.behavior(global.player, enemy)
@@ -299,7 +297,7 @@ function battle_new(enemy, alternate_win_test)
     end
 
     local status_width = num_status * 5
-    local status_padding = max(0, num_status-1) * 2
+    local status_padding = max(0, num_status - 1) * 2
 
     local status_x = x + size - (status_width + status_padding) / 2
 
@@ -340,10 +338,10 @@ function battle_new(enemy, alternate_win_test)
       enemy_turn()
     elseif state.victory and btnp(4) then
       return { victory = true }
-    elseif state.defeat and btnp(4) then
-      return { defeat = true }
     elseif state.alt_victory then
       return { alt_victory = true }
+    elseif state.defeat and btnp(4) then
+      return { defeat = true }
     end
   end
 
@@ -355,7 +353,7 @@ function battle_new(enemy, alternate_win_test)
     draw_fighter(enemy, 64 - 32 - 12)
 
     if state.select_action then
-      menu:draw()
+      state.menu:draw()
     elseif state.victory then
       local string = "v i c t o r y !"
       print(string, 64 - #string * 2, 88, 7)

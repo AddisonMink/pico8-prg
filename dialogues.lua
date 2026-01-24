@@ -387,3 +387,72 @@ The <c13>SAGE<r> has left. The <c2>DARKNESS<r> of the <c11>FOREST<r> deepens.
     end
   }
 )
+
+dragon = dialogue_new(
+  function()
+    return global.flags.dragon_defeated and 3
+        or global.flags.dragon_cured and 5
+  end,
+  [[
+@page
+@background forest
+@npc dragon
+@title <c6>NARRATOR<r>
+@body
+A mighty <c12>DRAGON<r> confronts you! It has a <c12>TERRIBLE COUNTENANCE<r>, but its eyes are <c13>DULL<r> and <c13>POWERLESS<r>.
+@body
+@option Fight
+@screen_transition
+
+@page
+@state_machine fight
+@callback post_fight
+@screen_transition
+
+@page
+@background forest
+@title <c6>NARRATOR<r>
+@body
+The <c12>DRAGON<r> lies motionless on the ground.
+@body
+@option Leave
+@callback leave
+
+@page
+@background forest
+@title <c6>NARRATOR<r>
+@body
+The <c12>DRAGON<r>'s eyes clear, and it lumbers back to the <c6>MOUNTAINS<r>.
+@body
+@option Continue
+
+@page
+@background forest
+@title <c6>NARRATOR<r>
+@body
+The <c12>DRAGON<r> is gone.
+@body
+@option Leave
+@callback leave
+]],
+  {
+    fight = battle_new(
+      enemy_dragon,
+      function(player, enemy) return not enemy.status.enchanted end
+    ),
+    post_fight = function(battle_result)
+      if battle_result.defeat then
+        return { result = "game_over" }
+      elseif battle_result.victory then
+        global.flags.dragon_defeated = true
+        return { page = 3 }
+      elseif battle_result.alt_victory then
+        global.flags.dragon_cured = true
+        return { page = 4 }
+      end
+    end,
+    leave = function()
+      return { result = true }
+    end
+  }
+)

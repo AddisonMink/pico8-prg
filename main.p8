@@ -10,14 +10,17 @@ __lua__
 #include dialogue.lua
 #include item.lua
 #include item_shop.lua
-#include dialogues.lua
 #include equipment.lua
 #include spell.lua
 #include enemy.lua
 #include battle_menu.lua
 #include battle.lua
+#include dialogues.lua
 
-dialogue = townsman
+global.mp = 2
+global.spells[2] = true
+
+dialogue = dragon
 result = nil
 dialogue:load()
 

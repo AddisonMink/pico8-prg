@@ -55,7 +55,7 @@ function dialogue_new(load, string, tools)
 
     for page in all(pages) do
       page.title = rich_text_parse(page.title)
-      page.body = text_crawl_new(page.body, w - 10)
+      page.body = text_crawl_new(page.body, w - 10, 0.025)
 
       if #page.options == 0 then
         add(page.options, "Continue")

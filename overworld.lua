@@ -18,6 +18,20 @@ function overworld_new()
     ["13,7"] = good_ending
   }
 
+  local battle_locations = {
+    ["3,9"] = { enemy_goblin },
+    ["1,9"] = { enemy_goblin_warrior, enemy_goblin },
+    ["1,11"] = { enemy_goblin_mage, enemy_goblin_warrior },
+    ["7,9"] = { enemy_goblin_warrior, enemy_goblin },
+    ["9,9"] = { enemy_goblin_mage, enemy_goblin_warrior },
+    ["9,11"] = { enemy_goblin_warrior, enemy_goblin },
+    ["11,11"] = { enemy_goblin_mage, enemy_goblin_warrior },
+    ["9,7"] = { enemy_zombie, enemy_zombie },
+    ["7,5"] = { enemy_zombie, enemy_zombie },
+    ["5,5"] = { enemy_ghost, enemy_zombie },
+    ["11,5"] = { enemy_ghost, enemy_zombie }
+  }
+
   local side_frames = { 42, 43 }
   local up_frames = { 44, 45, 46 }
   local down_frames = { 60, 61, 62 }
@@ -48,6 +62,11 @@ function overworld_new()
         global.coord.dy = 1
         state = { moving = true, tx = tx, ty = ty + 2, t0 = time() }
       elseif btnp(4) then
+        local key = tx .. "," .. ty
+        local loc = voluntary_locations[key]
+        if loc then
+          return { location = loc }
+        end
       end
     elseif state.moving then
       local done = time() - state.t0 > moving_dur
@@ -61,7 +80,20 @@ function overworld_new()
         global.coord.ty += global.coord.dy * 2 / (30 * moving_dur)
       end
     elseif state.enter then
+      local coord_key = global.coord.tx .. "," .. global.coord.ty
+      local loc = involuntary_locations[coord_key]
+      local bat = battle_locations[coord_key]
+      local bat_fought = bat and global.battles_locations_fought[coord_key]
+      local enemy = bat and (bat_fought and bat[2] or bat[1])
+
       state = { ready = true }
+
+      if loc then
+        return { location = loc }
+      elseif enemy then
+        global.battles_locations_fought[coord_key] = true
+        return { battle = enemy }
+      end
     end
   end
 

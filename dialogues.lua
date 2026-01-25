@@ -597,7 +597,7 @@ You also found <c10>$3<r>!
 @title <c6>NARRATOR<r>
 @body
 You sense the presence of an ancient <c2>CURSE<r>.
-<n>
+<n><n>
 An <c2>APPARITION<r> fades into view!
 @body
 @option Continue
@@ -609,7 +609,7 @@ An <c2>APPARITION<r> fades into view!
 @title <c2>CURSED BEING<r>
 @body
 I grant you the <c2>CURSE<r> that haunts the <c5>STONEFIELD<r>.
-<n>
+<n><n>
 May it afflict the last of the <c13>OLD MASTERS<r>.
 @body
 @option Continue
@@ -622,7 +622,7 @@ May it afflict the last of the <c13>OLD MASTERS<r>.
 @body
 You learned the <c2>CURSE<r> spell!
 <n>
-You also gained <c10>1 MAX MP<r>!
+You also gained <c12>1 MAX MP<r>!
 @body
 @option Continue
 @learn

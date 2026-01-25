@@ -30,6 +30,7 @@ function game_new()
     if result.battle then
       fade_out(overworld, result.battle, { battle = result.battle })
     elseif result.location then
+      result.location:load()
       fade_out(overworld, result.location, { location = result.location })
     end
   end
@@ -39,6 +40,7 @@ function game_new()
     if not result then return end
 
     if result.victory then
+      global.mp = min(global.mp + 1, global.max_mp)
       fade_out(state.battle, overworld, { overworld = overworld })
     elseif result.defeat then
       load_game()

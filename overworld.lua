@@ -87,9 +87,13 @@ function overworld_new()
 
       if loc then
         return { location = loc }
-      elseif enemy then
-        global.battle_locations_fought[coord_key] = true
-        return { battle = battle_new(enemy) }
+      elseif bat then
+        local enemy = nil
+        if bat_fought then enemy = bat[2] else enemy = bat[1] end
+        if enemy then
+          global.battle_locations_fought[coord_key] = true
+          return { battle = battle_new(enemy) }
+        end
       end
     end
   end

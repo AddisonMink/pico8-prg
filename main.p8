@@ -18,8 +18,9 @@ __lua__
 #include dialogues.lua
 #include text_crawls.lua
 #include overworld.lua
+#include game.lua
 
-dialogue = overworld_new()
+dialogue = game_new()
 result = nil
 dialogue:load()
 
@@ -29,8 +30,6 @@ end
 
 function _draw()
   cls()
-
-
 
   dialogue:draw(0, 0)
 end

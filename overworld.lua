@@ -36,30 +36,34 @@ function overworld_new()
   local up_frames = { 44, 45, 46 }
   local down_frames = { 60, 61, 62 }
 
+  local coord = { tx = 5, ty = 9, dx = 1, dy = 0 }
+  local battles_locations_fought = {}
   local state = { ready = true }
   local me = {}
 
   function me:load()
+    coord = { tx = 5, ty = 9, dx = 1, dy = 0 }
+    battles_locations_fought = {}
   end
 
   function me:update()
     if state.ready then
-      local tx, ty = global.coord.tx, global.coord.ty
+      local tx, ty = coord.tx, coord.ty
       if btnp(0) and mget(tx - 1, ty) == 114 and mget(tx - 2, ty) == 113 then
-        global.coord.dx = -1
-        global.coord.dy = 0
+        coord.dx = -1
+        coord.dy = 0
         state = { moving = true, tx = tx - 2, ty = ty, t0 = time() }
       elseif btnp(1) and mget(tx + 1, ty) == 114 and mget(tx + 2, ty) == 113 then
-        global.coord.dx = 1
-        global.coord.dy = 0
+        coord.dx = 1
+        coord.dy = 0
         state = { moving = true, tx = tx + 2, ty = ty, t0 = time() }
       elseif btnp(2) and mget(tx, ty - 1) == 165 and mget(tx, ty - 2) == 113 then
-        global.coord.dx = 0
-        global.coord.dy = -1
+        coord.dx = 0
+        coord.dy = -1
         state = { moving = true, tx = tx, ty = ty - 2, t0 = time() }
       elseif btnp(3) and mget(tx, ty + 1) == 165 and mget(tx, ty + 2) == 113 then
-        global.coord.dx = 0
-        global.coord.dy = 1
+        coord.dx = 0
+        coord.dy = 1
         state = { moving = true, tx = tx, ty = ty + 2, t0 = time() }
       elseif btnp(4) then
         local key = tx .. "," .. ty
@@ -72,18 +76,18 @@ function overworld_new()
       local done = time() - state.t0 > moving_dur
 
       if done then
-        global.coord.tx = state.tx
-        global.coord.ty = state.ty
+        coord.tx = state.tx
+        coord.ty = state.ty
         state = { enter = true }
       else
-        global.coord.tx += global.coord.dx * 2 / (30 * moving_dur)
-        global.coord.ty += global.coord.dy * 2 / (30 * moving_dur)
+        coord.tx += coord.dx * 2 / (30 * moving_dur)
+        coord.ty += coord.dy * 2 / (30 * moving_dur)
       end
     elseif state.enter then
-      local coord_key = global.coord.tx .. "," .. global.coord.ty
+      local coord_key = coord.tx .. "," .. coord.ty
       local loc = involuntary_locations[coord_key]
       local bat = battle_locations[coord_key]
-      local bat_fought = bat and global.battles_locations_fought[coord_key]
+      local bat_fought = bat and battles_locations_fought[coord_key]
       local enemy = bat and (bat_fought and bat[2] or bat[1])
 
       state = { ready = true }
@@ -91,23 +95,22 @@ function overworld_new()
       if loc then
         return { location = loc }
       elseif enemy then
-        global.battles_locations_fought[coord_key] = true
-        return { battle = enemy }
+        battles_locations_fought[coord_key] = true
+        return { battle = battle_new(enemy) }
       end
     end
   end
 
   function me:draw()
-    local coord = global.coord
     local coord_key = coord.tx .. "," .. coord.ty
     local player_x = coord.tx * 8
     local player_y = coord.ty * 8 - 4
     local player_flip_x = coord.dx > 0
     local loc = voluntary_locations[coord_key]
 
-    local frames = global.coord.dx ~= 0 and side_frames
-        or global.coord.dy < 0 and up_frames
-        or global.coord.dy > 0 and down_frames
+    local frames = coord.dx ~= 0 and side_frames
+        or coord.dy < 0 and up_frames
+        or coord.dy > 0 and down_frames
 
     rectfill(0, 0, 127, 27, 13)
     rectfill(0, 24, 127, 27, 14)

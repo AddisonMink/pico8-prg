@@ -16,8 +16,6 @@ global = {
   spells = { false, false, false },
   equipment = { false, false, false },
   flags = {},
-  coord = { tx = 5, ty = 9, dx = 1, dy = 0 },
-  battles_locations_fought = {}
 }
 
 function draw_hud()

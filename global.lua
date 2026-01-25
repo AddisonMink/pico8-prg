@@ -1,5 +1,5 @@
 global = {
-  player = {    
+  player = {
     hp = 10,
     max_hp = 10,
     status = {},
@@ -15,7 +15,8 @@ global = {
   items = { 0, 0, 0 },
   spells = { false, false, false },
   equipment = { false, false, false },
-  flags = {}
+  flags = {},
+  coord = { tx = 5, ty = 9, dx = 1, dy = 0 }
 }
 
 function draw_hud()

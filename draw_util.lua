@@ -10,6 +10,30 @@ function draw_background(id)
   end
 end
 
+function dither()
+  for x = 0, 127 do
+    for y = 0, 127 do
+      local dark = y % 2 == 0 and x % 2 == 0
+          or y % 2 == 1 and x % 2 == 1
+
+      if dark then
+        pset(x, y, 5)
+      end
+    end
+  end
+end
+
+function spr_outline(id, x, y,flip_x)
+  tint_palette(0)
+  for x = x-1, x+1 do
+    for y = y-1, y+1 do
+      spr(id, x, y, 1, 1, flip_x)
+    end
+  end
+  pal()
+  spr(id, x, y, 1, 1, flip_x)
+end
+
 function draw_npc(npc_sprite, x, y, size)
   local sx, sy = npc_sprite.sx, npc_sprite.sy
 

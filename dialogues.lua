@@ -6,11 +6,12 @@ townsman = dialogue_new(
 @npc townsman
 @title <c15>TOWNSMAN<r>
 @body
-Please take whatever <c15>ITEMS<r> you can carry!
+Welcome, <c11>FRIEND<r>! Rest and prepare yourself.
 <n><n>
 If you find any <c10>$<r>, I'll trade <c6>EQUIPMENT<r> for them.
 @body
-@option Continue
+@option Rest and Save
+@callback rest_and_save
 
 @page
 @state_machine item_shop
@@ -57,6 +58,10 @@ Good luck!
 @callback leave
 ]],
   {
+    rest_and_save = function()
+      save_game()
+      reset_player()
+    end,
     item_shop = item_shop_new(),
     go_to_hint = function()
       local page = not global.flags.wizard and 3
@@ -569,6 +574,77 @@ The <c13>DARK ELF<r>'s ashen remains blow away on the wind, out over the <c5>STO
     end,
     good_ending = function()
       return { result = "good_ending" }
+    end
+  }
+)
+
+tomb = dialogue_new(
+  function() return global.flags.tomb and 5 end,
+  [[
+@page
+@background tower
+@title <c6>NARRATOR<r>
+@body
+You found the <c2>TOMB<r>!
+<n><n>
+You also found <c10>$3<r>!
+@body
+@option Continue
+@callback visit
+
+@page
+@background tower
+@title <c6>NARRATOR<r>
+@body
+You sense the presence of an ancient <c2>CURSE<r>.
+<n>
+An <c2>APPARITION<r> fades into view!
+@body
+@option Continue
+@screen_transition
+
+@page
+@background tower
+@npc ghost
+@title <c2>CURSED BEING<r>
+@body
+I grant you the <c2>CURSE<r> that haunts the <c5>STONEFIELD<r>.
+<n>
+May it afflict the last of the <c13>OLD MASTERS<r>.
+@body
+@option Continue
+@learn
+
+@page
+@background tower
+@npc ghost
+@title <c6>NARRATOR<r>
+@body
+You learned the <c2>CURSE<r> spell!
+<n>
+You also gained <c10>1 MAX MP<r>!
+@body
+@option Continue
+@learn
+@screen_transition
+
+@page
+@background tower
+@title <c6>NARRATOR<r>
+@body
+The <c2>TOMB<r> is silent.
+@body
+@option Leave
+]],
+  {
+    visit = function()
+      global.money += 3
+      global.flags.tomb = true
+    end,
+    learn = function()
+      global.spells[3] = true
+      global.max_mp += 1
+      global.mp += 1
     end
   }
 )

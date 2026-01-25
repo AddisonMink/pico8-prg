@@ -51,7 +51,15 @@ function game_new()
     local result = state.location:update()
     if not result then return end
 
-    if result then
+    if result == "game_over" then
+      load_game()
+      reset_player()
+      fade_out(state.battle, overworld, { overworld = overworld })
+    elseif result == "bad_ending" then
+      fade_out(state.location, bad_ending_text_crawl, { bad_ending = bad_ending_text_crawl })
+    elseif result == "good_ending" then
+      fade_out(state.location, good_ending_text_crawl, { good_ending = good_ending_text_crawl })
+    else
       fade_out(state.location, overworld, { overworld = overworld })
     end
   end
@@ -65,6 +73,10 @@ function game_new()
       update_battle()
     elseif state.location then
       update_location()
+    elseif state.bad_ending and state.bad_ending.update() then
+      return "bad_ending"
+    elseif state.good_ending and state.good_ending.update() then
+      return "good_ending"
     elseif state.fade_out and time() - state.t0 >= fade_dur then
       fade_in(state.draw2, state.next_state)
     elseif state.fade_in and time() - state.t0 >= fade_dur then
@@ -83,6 +95,11 @@ function game_new()
       overworld:draw()
       dither()
       state.opening:draw()
+    elseif state.bad_ending then
+      state.bad_ending:draw()
+    elseif state.good_ending then
+      overworld:draw()
+      state.good_ending:draw()
     elseif state.overworld then
       overworld:draw()
     elseif state.battle then
@@ -91,7 +108,7 @@ function game_new()
       state.location:draw()
     end
 
-    if not state.opening then
+    if not state.opening and not state.good_ending and not state.bad_ending then
       draw_hud()
     end
   end

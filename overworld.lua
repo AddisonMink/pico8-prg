@@ -7,7 +7,7 @@ function overworld_new()
     ["1,13"] = fairy1,
     ["11,13"] = fairy2,
     ["9,5"] = priestess,
-    ["3,5"] = "tomb",
+    ["3,5"] = tomb,
     ["11,3"] = bad_ending,
     ["13,9"] = fairy3,
     ["13,11"] = sage

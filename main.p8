@@ -22,7 +22,6 @@ __lua__
 
 dialogue = game_new()
 result = nil
-dialogue:load()
 
 function _update()
   result = dialogue:update()

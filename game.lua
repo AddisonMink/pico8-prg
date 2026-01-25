@@ -1,7 +1,7 @@
 function game_new()
   local fade_dur = 0.5
   local overworld = overworld_new()
-  local state = { overworld = overworld }
+  local state = { opening = opening_text_crawl }
   local me = {}
 
   local function fade_out(current, next, next_state)
@@ -41,6 +41,9 @@ function game_new()
     if result.victory then
       fade_out(state.battle, overworld, { overworld = overworld })
     elseif result.defeat then
+      load_game()
+      reset_player()
+      fade_out(state.battle, overworld, { overworld = overworld })
     end
   end
 
@@ -53,12 +56,10 @@ function game_new()
     end
   end
 
-  function me:load()
-    overworld:load()
-  end
-
   function me:update()
-    if state.overworld then
+    if state.opening and state.opening.update() then
+      state = { overworld = overworld }
+    elseif state.overworld then
       update_overworld()
     elseif state.battle then
       update_battle()
@@ -78,6 +79,10 @@ function game_new()
     elseif state.fade_in then
       local progress = (time() - state.t0) / fade_dur
       screen_fade_in(state.draw, progress)
+    elseif state.opening then
+      overworld:draw()
+      dither()
+      state.opening:draw()
     elseif state.overworld then
       overworld:draw()
     elseif state.battle then
@@ -86,7 +91,9 @@ function game_new()
       state.location:draw()
     end
 
-    draw_hud()
+    if not state.opening then
+      draw_hud()
+    end
   end
 
   return me

@@ -39,25 +39,28 @@ function overworld_new()
   local state = { ready = true }
   local me = {}
 
+  local function start_move(dx, dy)
+    global.coord.dx = dx
+    global.coord.dy = dy
+    state = {
+      moving = true,
+      tx = global.coord.tx + dx * 2,
+      ty = global.coord.ty + dy * 2,
+      t0 = time()
+    }
+  end
+
   function me:update()
     if state.ready then
       local tx, ty = global.coord.tx, global.coord.ty
       if btnp(0) and mget(tx - 1, ty) == 114 and mget(tx - 2, ty) == 113 then
-        global.coord.dx = -1
-        global.coord.dy = 0
-        state = { moving = true, tx = tx - 2, ty = ty, t0 = time() }
+        start_move(-1, 0)
       elseif btnp(1) and mget(tx + 1, ty) == 114 and mget(tx + 2, ty) == 113 then
-        global.coord.dx = 1
-        global.coord.dy = 0
-        state = { moving = true, tx = tx + 2, ty = ty, t0 = time() }
+        start_move(1, 0)
       elseif btnp(2) and mget(tx, ty - 1) == 165 and mget(tx, ty - 2) == 113 then
-        global.coord.dx = 0
-        global.coord.dy = -1
-        state = { moving = true, tx = tx, ty = ty - 2, t0 = time() }
+        start_move(0, -1)
       elseif btnp(3) and mget(tx, ty + 1) == 165 and mget(tx, ty + 2) == 113 then
-        global.coord.dx = 0
-        global.coord.dy = 1
-        state = { moving = true, tx = tx, ty = ty + 2, t0 = time() }
+        start_move(0, 1)
       elseif btnp(4) then
         local key = tx .. "," .. ty
         local loc = voluntary_locations[key]
@@ -66,8 +69,8 @@ function overworld_new()
         end
       end
     elseif state.moving then
-      local done = time() - state.t0 > moving_dur
-
+      
+      local done = time() - state.t0 >= moving_dur
       if done then
         global.coord.tx = state.tx
         global.coord.ty = state.ty

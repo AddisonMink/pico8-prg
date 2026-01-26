@@ -331,7 +331,6 @@ The <c14>PRAYER<r> I taught you can break all manner of foul <c13>ENCHANTMENTS<r
   {
     visit = function()
       global.money += 2
-      global.max_item_count += 1
       global.flags.temple = true
     end,
     learn = function()

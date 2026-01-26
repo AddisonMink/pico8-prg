@@ -23,10 +23,10 @@ function dither()
   end
 end
 
-function spr_outline(id, x, y,flip_x)
+function spr_outline(id, x, y, flip_x)
   tint_palette(0)
-  for x = x-1, x+1 do
-    for y = y-1, y+1 do
+  for x = x - 1, x + 1 do
+    for y = y - 1, y + 1 do
       spr(id, x, y, 1, 1, flip_x)
     end
   end
@@ -88,4 +88,13 @@ function screen_fade_in(draw, progress)
       end
     end
   end
+end
+
+function draw_map()
+  rectfill(0, 0, 127, 27, 13)
+  rectfill(0, 24, 127, 27, 14)
+  circfill(91, 27, 8, 14)
+  circfill(91, 27, 4, 8)
+  rectfill(0, 28, 127, 127, 0)
+  map()
 end

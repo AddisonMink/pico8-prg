@@ -109,12 +109,7 @@ function overworld_new()
         or global.coord.dy < 0 and up_frames
         or global.coord.dy > 0 and down_frames
 
-    rectfill(0, 0, 127, 27, 13)
-    rectfill(0, 24, 127, 27, 14)
-    circfill(91, 27, 8, 14)
-    circfill(91, 27, 4, 8)
-    rectfill(0, 28, 127, 127, 0)
-    map()
+    draw_map()
 
     for tx = 0, 15 do
       for ty = 0, 15 do

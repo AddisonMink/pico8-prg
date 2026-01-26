@@ -94,7 +94,7 @@ function game_new()
       local progress = (time() - state.t0) / fade_dur
       screen_fade_in(state.draw, progress)
     elseif state.opening then
-      overworld:draw()
+      draw_map()
       dither()
       state.opening:draw()
     elseif state.bad_ending then

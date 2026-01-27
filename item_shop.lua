@@ -4,11 +4,16 @@ function item_shop_new()
   local title = rich_text_parse("<c15>ITEM SHOP")
   local text = rich_text_parse("Take whatever you need!")
 
-  local options = {
+  local names = {
     rich_text_parse(item_shield.name),
     rich_text_parse(item_resin.name),
-    rich_text_parse(item_talisman.name),
-    rich_text_parse("Continue")
+    rich_text_parse(item_talisman.name)
+  }
+
+  local descs = {
+    rich_text_parse(item_shield.desc),
+    rich_text_parse(item_resin.desc),
+    rich_text_parse(item_talisman.desc)
   }
 
   local me = {}
@@ -51,12 +56,17 @@ function item_shop_new()
     rich_text_print(text, x, y)
     y += 10
 
-    for i, option in ipairs(options) do
+    for i = 1, 4 do
       local invalid = not option_valid(i)
-      rich_text_print(option, x + 10, y, invalid and 5)
       if i < 4 then
+        local name = names[i]
+        local desc = descs[i]
+        rich_text_print(name, x + 10, y, invalid and 5)
         print("X" .. global.items[i], x + 36, y, invalid and 5 or 6)
-      end      
+        rich_text_print(desc, x + 56, y, invalid and 5)
+      else
+        print("cONTINUE", x + 10, y, invalid and 5 or 7)
+      end
       if i == index then spr(16, x, y) end
       y += 10
     end

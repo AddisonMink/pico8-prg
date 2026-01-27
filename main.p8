@@ -20,7 +20,7 @@ __lua__
 #include overworld.lua
 #include game.lua
 
-dialogue = game_new()
+dialogue = item_shop_new()
 result = nil
 
 function _update()

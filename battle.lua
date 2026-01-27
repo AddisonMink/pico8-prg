@@ -50,8 +50,9 @@ function battle_new(enemy, alternate_win_test)
 
     local effects = {}
     if state.actor.status.burn then
+      local damage = state.actor.status.invisible and 0 or 3
       add(effects, { animation = "fire", target = state.actor })
-      add(effects, { damage = 3, target = state.actor })
+      add(effects, { damage = damage, target = state.actor })
       if state.actor.hp <= 3 then
         next_state = state.actor == enemy
             and { victory = true }
@@ -59,7 +60,7 @@ function battle_new(enemy, alternate_win_test)
       end
     end
 
-    if state.actor.status.dragon_burn then
+    if state.actor.status.dragon_burn then      
       add(effects, { animation = "fire", target = state.actor })
       add(effects, { damage = 10, target = state.actor })
       if state.actor.hp <= 10 then
@@ -153,7 +154,7 @@ function battle_new(enemy, alternate_win_test)
       state.t0 = time()
       state.dur = 0.5
     elseif effect.status then
-      if effect.target.status.dispel then return end
+      if effect.target.status.dispel and effect.status ~= "strength" then return end
       local dur = (effect.target.status[effect.status] or 0) + effect.dur
       effect.target.status[effect.status] = dur
     elseif effect.message then

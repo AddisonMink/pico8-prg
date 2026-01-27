@@ -15,10 +15,9 @@ spell_dispel = {
   compile_effects = function(player, enemy)
     return {
       { animation = "poof", target = enemy },
-      { status_remove = "invisible", target = enemy },
       { status_remove = "undead", target = enemy },
       { status_remove = "enchanted", target = enemy },
-      { status = "dispel", target = enemy, dur = 2 }
+      { status = "dispel", target = enemy, dur = 3 }
     }
   end
 }

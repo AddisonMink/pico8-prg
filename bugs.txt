@@ -5,9 +5,9 @@ X restore mp on battle start, not on battle win.
 X make roads after sage encounter. remove them if you die without saving.
 X tomb doesn't give mp
 X priestess not loading state correctly.
-- dispel should not prevent using resin.
+X dispel should not prevent using resin.
+X bad ending doesn't work.
+X burn should not work on invisible enemies.
+X dispel should not remove invisible.
 - no mp restore on non-combat tiles?
 - rest in sage hut.
-- burn should not work on invisible enemies.
-- dispel should not remove invisible.
-- bad ending doesn't work.

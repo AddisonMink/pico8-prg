@@ -316,7 +316,7 @@ The <c2>CURSED BEINGS<r> cannot die, so I will teach you a <c14>PRAYER<r> to bre
 @npc priestess
 @title <c6>NARRATOR<r>
 @body
-You learned the <c14>DISPEL<r> spell! (O <i177>x2, Remove <i162>, <i163>, <i164>)
+You learned the <c14>DISPEL<r> spell! (O <i177>x3, Remove <i162>, <i164>)
 <n>
 You also gained <c12>1 MAX MP<r>!
 @body

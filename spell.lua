@@ -1,5 +1,6 @@
 spell_candle = {
-  name = "<c8>Candle",
+  name = "cANDLE",
+  color = 8,
   mp_cost = 1,
   compile_effects = function(player, enemy)
     return {
@@ -10,7 +11,8 @@ spell_candle = {
 }
 
 spell_dispel = {
-  name = "<c14>Dispel",
+  name = "dISPEL",
+  color = 14,
   mp_cost = 2,
   compile_effects = function(player, enemy)
     return {
@@ -23,7 +25,8 @@ spell_dispel = {
 }
 
 spell_curse = {
-  name = "<c2>Curse",
+  name = "cURSE",
+  color = 2,
   mp_cost = 3,
   compile_effects = function(player, enemy)
     return {
@@ -33,3 +36,5 @@ spell_curse = {
     }
   end
 }
+
+spell_data = { spell_candle, spell_dispel, spell_curse }

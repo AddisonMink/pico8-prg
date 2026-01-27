@@ -1,99 +1,78 @@
 function battle_menu_new()
+  local action_menu = {
+    title = { "actions", 7 },
+    num_options = 3,
+    draw = function(x, y, i)
+      _ = i == 1 and print("aTTACK", x, y, 7)
+          or i == 2 and print("iTEM", x, y, 15)
+          or i == 3 and print("sPELL", x, y, 12)
+    end
+  }
+
+  local item_menu = {
+    title = { "items", 15 },
+    num_options = 3,
+    draw = function(x, y, i)
+      local item = item_data[i]
+      local quant = global.items[i]
+      local color = quant == 0 and 5
+      print(item.name, x, y, color or item.color)
+      print(" x" .. quant, x + 24, y, color or 6)
+    end,
+    choose = function(i)
+      return i <= 3
+          and global.items[i] > 0
+          and { item = item_data[i] }
+    end
+  }
+
+  local spell_menu = {
+    title = { "spells", 12 },
+    num_options = 3,
+    draw = function(x, y, i)
+      local spell = spell_data[i]
+      local color = (not global.spells[i] or global.mp < spell.mp_cost) and 5
+      print(spell.name, x, y, color or spell.color)
+      print(spell.mp_cost .. "mp", x + 28, y, color or 12)
+    end,
+    choose = function(i)
+      return i <= 3
+          and global.spells[i]
+          and global.mp >= spell_data[i].mp_cost
+          and { spell = spell_data[i] }
+    end
+  }
+
   local x, y, w, h = 10, 88, 108, 34
   local index_i, index_j = 1, 1
-
-  local action_state = {
-    title = rich_text_parse("ACTION"),
-    options = {
-      { name = rich_text_parse("Attack"), ok = true, result = { attack = true } },
-      { name = rich_text_parse("<c15>Item"), ok = true, state = "item" },
-      { name = rich_text_parse("<c12>Spell"), ok = true, state = "spell" },
-      { name = rich_text_parse("<c6>Wait"), ok = true, result = { wait = true } }
-    }
-  }
-
-  local spell_state = {
-    title = rich_text_parse("<c12>SPELL"),
-    options = {
-      {
-        name = rich_text_parse(spell_candle.name .. " <c12>" .. spell_candle.mp_cost .. "MP"),
-        ok = global.spells[1] and global.mp >= spell_candle.mp_cost,
-        result = { spell = spell_candle }
-      },
-      {
-        name = rich_text_parse(spell_dispel.name .. " <c12>" .. spell_dispel.mp_cost .. "MP"),
-        ok = global.spells[2] and global.mp >= spell_dispel.mp_cost,
-        result = { spell = spell_dispel }
-      },
-      {
-        name = rich_text_parse(spell_curse.name .. "  <c12>" .. spell_curse.mp_cost .. "MP"),
-        ok = global.spells[3] and global.mp >= spell_curse.mp_cost,
-        result = { spell = spell_curse }
-      }
-    }
-  }
-
-  local item_state = {
-    title = rich_text_parse("<c15>ITEM"),
-    options = {
-      {
-        name = rich_text_parse(item_shield.name .. " <r>x" .. global.items[1]),
-        ok = global.items[1] > 0,
-        result = { item = item_shield }
-      },
-      {
-        name = rich_text_parse(item_resin.name .. " <r>x" .. global.items[2]),
-        ok = global.items[2] > 0,
-        result = { item = item_resin }
-      },
-      {
-        name = rich_text_parse(item_talisman.name .. " <r>x" .. global.items[3]),
-        ok = global.items[3] > 0,
-        result = { item = item_talisman }
-      }
-    }
-  }
-
-  local states = {
-    action = action_state,
-    spell = spell_state,
-    item = item_state
-  }
-
-  local state = action_state
+  local menu = action_menu
+  local state = "main"
   local me = {}
 
-  function me:load()
-    state = action_state
-    index_i = 1
-    index_j = 1
-  end
-
   function me:update()
-    if btnp(0) then
-      index_i = (index_i - 2) % 2 + 1
-    elseif btnp(1) then
-      index_i = index_i % 2 + 1
-    elseif btnp(2) then
-      index_j = (index_j - 2) % 2 + 1
-    elseif btnp(3) then
-      index_j = index_j % 2 + 1
-    elseif btnp(4) then
-      local index = (index_j - 1) * 2 + index_i
-      local option = state.options[index]
-      if option and option.ok then
-        if not option.ok then
-          return
-        elseif option.state then
-          state = states[option.state]
-          index_i = 1
-          index_j = 1
-        elseif option.result then
-          return option.result
-        end
+    index_i = btnp(0) and (index_i - 2) % 2 + 1
+        or btnp(1) and index_i % 2 + 1
+        or index_i
+
+    index_j = update_index(index_j, 2)
+    local index = (index_j - 1) * 2 + index_i
+
+    if state == "main" and btnp(4) then
+      if index == 1 then
+        return { attack = true }
+      elseif index == 2 then
+        state, menu, index_i, index_j = "sub", item_menu, 1, 1
+      elseif index == 3 then
+        state, menu, index_i, index_j = "sub", spell_menu, 1, 1
       end
-    elseif btnp(5) then
-      state = action_state
+    elseif state == "main" and btnp(5) then
+      return { wait = true }
+    elseif state == "sub" then
+      if btnp(5) then
+        state, menu, index_i, index_j = "main", action_menu, 1, 1
+      elseif btnp(4) then
+        return menu.choose(index)
+      end
     end
   end
 
@@ -101,24 +80,24 @@ function battle_menu_new()
     local x, y = x, y
     draw_panel(1, x, y, w, h)
     x += 4
+    local x0 = x
     y += 4
-    rich_text_print(state.title, x, y)
+    print(menu.title[1], x, y, menu.title[2])
     y += 10
-    for i = 1, 2 do
-      for j = 1, 2 do
-        local x = x + (i - 1) * 50 + 10
-        local y = y + (j - 1) * 10
+    for j = 1, 2 do
+      x = x0
+      for i = 1, 2 do
         local index = (j - 1) * 2 + i
-        local option = state.options[index]
 
-        if option then
-          rich_text_print(option.name, x, y, not option.ok and 5)
+        if index < 4 then
+          menu.draw(x + 10, y, index)
         end
-
         if i == index_i and j == index_j then
-          spr(16, x - 10, y)
+          spr(16, x, y)
         end
+        x += 48
       end
+      y += 10
     end
   end
 

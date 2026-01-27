@@ -1,20 +1,6 @@
 function item_shop_new()
   local x, y, w, h = 2, 58, 124, 66
   local index = 1
-  local title = rich_text_parse("<c15>ITEM SHOP")
-  local text = rich_text_parse("Take whatever you need!")
-
-  local names = {
-    rich_text_parse(item_shield.name),
-    rich_text_parse(item_resin.name),
-    rich_text_parse(item_talisman.name)
-  }
-
-  local descs = {
-    rich_text_parse(item_shield.desc),
-    rich_text_parse(item_resin.desc),
-    rich_text_parse(item_talisman.desc)
-  }
 
   local me = {}
 
@@ -30,11 +16,9 @@ function item_shop_new()
   end
 
   function me:update()
-    if btnp(2) then
-      index = (index - 2) % 4 + 1
-    elseif btnp(3) then
-      index = index % 4 + 1
-    elseif btnp(4) and option_valid(index) then
+    index = update_index(index, 4)
+
+    if btnp(4) and option_valid(index) then
       if index == 4 then
         return true
       else
@@ -51,21 +35,19 @@ function item_shop_new()
     draw_panel(1, x, y, w, h)
     x += 4
     y += 4
-    rich_text_print(title, x, y)
+    print("item shop", x, y, 15)
     y += 10
-    rich_text_print(text, x, y)
+    print("tAKE WHATEVER YOU NEED!", x, y, 7)
     y += 10
 
     for i = 1, 4 do
-      local invalid = not option_valid(i)
+      local color = not option_valid(i) and 5
       if i < 4 then
-        local name = names[i]
-        local desc = descs[i]
-        rich_text_print(name, x + 10, y, invalid and 5)
-        print("X" .. global.items[i], x + 36, y, invalid and 5 or 6)
-        rich_text_print(desc, x + 56, y, invalid and 5)
+        local item = item_data[i]
+        print(item.name, x + 10, y, color or item.color)
+        print("X" .. global.items[i], x + 36, y, color or 6)
       else
-        print("cONTINUE", x + 10, y, invalid and 5 or 7)
+        print("cONTINUE", x + 10, y, color or 7)
       end
       if i == index then spr(16, x, y) end
       y += 10
@@ -76,24 +58,8 @@ function item_shop_new()
 end
 
 function equipment_shop_new()
-  local icon_map = {
-    armor = 161,
-    strength = 160,
-    dispel = 177
-  }
-
   local x, y, w, h = 2, 58, 124, 66
   local index = 1
-  local title = rich_text_parse("<10>EQUIPMENT SHOP")
-  local text = rich_text_parse("I'll trade <c10>$<r> for equipment!")
-
-  local options = {
-    rich_text_parse(equipment_armor.name),
-    rich_text_parse(equipment_sword.name),
-    rich_text_parse(equipment_helmet.name),
-    rich_text_parse("Continue")
-  }
-
   local me = {}
 
   local function option_valid(i)
@@ -107,11 +73,9 @@ function equipment_shop_new()
   end
 
   function me:update()
-    if btnp(2) then
-      index = (index - 2) % 4 + 1
-    elseif btnp(3) then
-      index = index % 4 + 1
-    elseif btnp(4) and option_valid(index) then
+    index = update_index(index, 4)
+
+    if btnp(4) and option_valid(index) then
       if index == 4 then
         return true
       else
@@ -128,26 +92,26 @@ function equipment_shop_new()
     draw_panel(1, x, y, w, h)
     x += 4
     y += 4
-    rich_text_print(title, x, y)
+    print("eQUIPMENT sHOP", x, y, 15)
     y += 10
-    rich_text_print(text, x, y)
+    local x0 = print("i'LL TRADE", x, y, 7)
+    x0 = print(" $ ", x0, y, 10)
+    print("FOR EQUIPMENT!", x0, y, 7)
     y += 10
 
-    for i, option in ipairs(options) do
-      local equipment = equipment_data[i]
+    for i = 1, 4 do
       local color = not option_valid(i) and 5
 
-      rich_text_print(option, x + 10, y, color)
       if i < 4 then
+        local equipment = equipment_data[i]
+        print(equipment.name, x + 10, y, color or equipment.color)
         if global.equipment[i] then
           print("owned", x + 44, y, 5)
         else
           print("$" .. equipment.money_cost, x + 44, y, color or 10)
         end
-        if color then tint_palette(color) end
-        spr(icon_map[equipment.status], x + 80, y)
-        pal()
-        print("x1", x + 89, y, color or 7)
+      else
+        print("cONTINUE", x + 10, y, color or 7)
       end
       if i == index then spr(16, x, y) end
       y += 10

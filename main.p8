@@ -21,31 +21,18 @@ __lua__
 #include game.lua
 #include title_screen.lua
 
-state = "title"
-title = title_screen_new()
-game = game_new()
+game = battle_menu_new()
 
 function _update()
-  if state == "title" then
-    local result = title:update()
-    if result == "new" then
-      state = "game"
-    elseif result == "load" then
-    end
-  elseif game:update() then
-    state = "title"
-    title:load()
+  if not result then
+    result = game:update()
   end
 end
 
 function _draw()
   cls()
 
-  if state == "title" then
-    title:draw()
-  elseif state == "game" then
-    game:draw()
-  end
+  if result then print(result, 0, 0, 7) else game:draw() end
 end
 
 __gfx__

@@ -98,3 +98,9 @@ function draw_map()
   rectfill(0, 28, 127, 127, 0)
   map()
 end
+
+function update_index(index, max)
+  return btnp(2) and (index - 2) % max + 1
+      or btnp(3) and index % max + 1
+      or index
+end

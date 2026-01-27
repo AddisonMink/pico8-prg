@@ -1,26 +1,22 @@
 equipment_armor = {
-  id = 1,
-  name = "<c6>Armor",
+  name = "aRMOR",
+  color = 6,
   money_cost = 3,
   status = "armor"
 }
 
 equipment_sword = {
-  id = 2,
-  name = "<c12>Sword",
+  name = "sWORD",
+  color = 12,
   money_cost = 5,
   status = "strength"
 }
 
 equipment_helmet = {
-  id = 3,
-  name = "<c14>Helmet",
+  name = "hELMET",
+  color = 14,
   money_cost = 5,
   status = "dispel"
 }
 
-equipment_data = {
-  [equipment_armor.id] = equipment_armor,
-  [equipment_sword.id] = equipment_sword,
-  [equipment_helmet.id] = equipment_helmet
-}
+equipment_data = { equipment_armor, equipment_sword, equipment_helmet }

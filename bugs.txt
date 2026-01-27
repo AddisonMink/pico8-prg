@@ -27,3 +27,8 @@ TODO
 - rest in fairy3.
 - save and load from cartridge.
 - pause menu glossary.
+
+8107
+8059 -- tokens saved!
+8003 -- tokens saved!
+7967 -- tokens saved!

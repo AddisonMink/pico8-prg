@@ -70,7 +70,7 @@ Good luck!
     go_to_hint = function()
       local page = not global.flags.wizard and 4
           or not global.flags.temple and 5
-          or 6
+          or 7
       return { page = page }
     end,
     leave = function() return { result = true } end
@@ -317,7 +317,7 @@ The <c2>CURSED BEINGS<r> cannot die, so I will teach you a <c14>PRAYER<r> to bre
 @title <c6>NARRATOR<r>
 @body
 You learned the <c14>DISPEL<r> spell! (O <i177>x2, Remove <i162>, <i163>, <i164>)
-<n><n>
+<n>
 You also gained <c12>1 MAX MP<r>!
 @body
 @option Continue
@@ -392,6 +392,8 @@ The <c13>SAGE<r> has left. The <c2>DARKNESS<r> of the <c11>FOREST<r> deepens.
   {
     visit = function()
       global.flags.sage = true
+      mset(11, 4, 165)
+      mset(13, 8, 165)
     end
   }
 )
@@ -628,7 +630,7 @@ You learned the <c2>CURSE<r> spell! (O <i162>x1, <i178>x5 )
 You also gained <c12>1 MAX MP<r>!
 @body
 @option Continue
-@learn
+@callback learn
 @screen_transition
 
 @page

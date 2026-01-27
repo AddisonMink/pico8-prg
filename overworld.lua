@@ -53,13 +53,13 @@ function overworld_new()
   function me:update()
     if state.ready then
       local tx, ty = global.coord.tx, global.coord.ty
-      if btnp(0) and mget(tx - 1, ty) == 114 and mget(tx - 2, ty) == 113 then
+      if btnp(0) and mget(tx - 1, ty) == 114 then
         start_move(-1, 0)
-      elseif btnp(1) and mget(tx + 1, ty) == 114 and mget(tx + 2, ty) == 113 then
+      elseif btnp(1) and mget(tx + 1, ty) == 114 then
         start_move(1, 0)
-      elseif btnp(2) and mget(tx, ty - 1) == 165 and mget(tx, ty - 2) == 113 then
+      elseif btnp(2) and mget(tx, ty - 1) == 165 then
         start_move(0, -1)
-      elseif btnp(3) and mget(tx, ty + 1) == 165 and mget(tx, ty + 2) == 113 then
+      elseif btnp(3) and mget(tx, ty + 1) == 165 then
         start_move(0, 1)
       elseif btnp(4) then
         local key = tx .. "," .. ty
@@ -74,6 +74,7 @@ function overworld_new()
       if done then
         global.coord.tx = state.tx
         global.coord.ty = state.ty
+        global.mp = min(global.mp + 1, global.max_mp)
         state = { enter = true }
       else
         global.coord.tx += global.coord.dx * 2 / (30 * moving_dur)

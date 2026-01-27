@@ -20,6 +20,15 @@ __lua__
 #include overworld.lua
 #include game.lua
 
+global.flags.fairy1 = true
+global.flags.wizard = true
+global.max_mp = 1
+global.mp = 1
+global.max_item_count = 4
+global.spells[1] = true
+global.equipment[1] = true
+global.money = 1
+
 dialogue = game_new()
 result = nil
 

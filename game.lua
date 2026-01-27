@@ -40,7 +40,6 @@ function game_new()
     if not result then return end
 
     if result.victory then
-      global.mp = min(global.mp + 1, global.max_mp)
       fade_out(state.battle, overworld, { overworld = overworld })
     elseif result.defeat then
       load_game()

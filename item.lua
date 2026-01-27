@@ -22,8 +22,7 @@ item_talisman = {
   desc = "S <i177>x1",
   compile_effects = function(player, enemy)
     return {
-      { status = "dispel", target = player, dur = 1 },
-      { status = "dispel", target = enemy, dur = 3 }
+      { status = "dispel", target = player, dur = 1 }
     }
   end
 }

@@ -48,6 +48,7 @@ function save_game()
     saved.equipment[i] = global.equipment[i]
   end
 
+  saved.flags = {}
   for k, v in pairs(global.flags) do
     saved.flags[k] = v
   end
@@ -66,8 +67,17 @@ function load_game()
     global.equipment[i] = saved.equipment[i]
   end
 
+  global.flags = {}
   for k, v in pairs(saved.flags) do
     global.flags[k] = v
+  end
+
+  if global.flags.sage then
+    mset(11, 4, 165)
+    mset(13, 8, 165)
+  else
+    mset(11, 4, 180)
+    mset(13, 8, 180)
   end
 end
 

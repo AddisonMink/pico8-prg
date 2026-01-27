@@ -1,3 +1,4 @@
+BUGS
 X zombie reappears before death?
 X general stuttering
 X townsman should go to beginning of priestess hint.
@@ -10,6 +11,12 @@ X bad ending doesn't work.
 X burn should not work on invisible enemies.
 X dispel should not remove invisible.
 X dark elf doesn't work.
+X confirm dark elf is beatable.
+X good ending not displayed correctly
+X game crashes if you die in dialogue
 
-- no mp restore on non-combat tiles?
-- rest in sage hut.
+TESTS
+
+TWEAKS
+- restore MP only after battle.
+- rest in fairy3.

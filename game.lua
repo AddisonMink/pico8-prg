@@ -55,7 +55,7 @@ function game_new()
     if result == "game_over" then
       load_game()
       reset_player()
-      fade_out(state.battle, overworld, { overworld = overworld })
+      fade_out(state.location, overworld, { overworld = overworld })
     elseif result == "bad_ending" then
       fade_out(state.location, bad_ending_text_crawl, { bad_ending = bad_ending_text_crawl })
     elseif result == "good_ending" then
@@ -99,7 +99,8 @@ function game_new()
     elseif state.bad_ending then
       state.bad_ending:draw()
     elseif state.good_ending then
-      overworld:draw()
+      draw_map()
+      dither()
       state.good_ending:draw()
     elseif state.overworld then
       overworld:draw()

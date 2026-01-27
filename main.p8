@@ -28,8 +28,9 @@ game = game_new()
 function _update()
   if state == "title" then
     local result = title:update()
-    if result then
+    if result == "new" then
       state = "game"
+    elseif result == "load" then
     end
   elseif game:update() then
     state = "title"

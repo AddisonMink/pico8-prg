@@ -1,4 +1,6 @@
-BUGS
+TASKS
+
+DONE
 X zombie reappears before death?
 X general stuttering
 X townsman should go to beginning of priestess hint.
@@ -17,16 +19,11 @@ X game crashes if you die in dialogue
 X dispel should not block armor.
 X make "corrupted forest" tile.
 X add curse animation.
+X start menu (new | load)
+X title screen
 
-TESTS
-
-TWEAKS
+TODO
 - restore MP only after battle.
 - rest in fairy3.
-
-STRETCH
 - save and load from cartridge.
-- start menu (new | load)
-- title screen
 - pause menu glossary.
-- make alternate forest and mountain tiles.

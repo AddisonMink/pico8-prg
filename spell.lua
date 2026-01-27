@@ -27,6 +27,7 @@ spell_curse = {
   mp_cost = 3,
   compile_effects = function(player, enemy)
     return {
+      { animation = "skull", target = enemy },
       { status = "undead", target = enemy, dur = 1 },
       { damage = 5, target = enemy }
     }

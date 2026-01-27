@@ -2,7 +2,8 @@ function battle_new(enemy, alternate_win_test)
   animations = {
     slash = { sx = 24, sy = 48 },
     fire = { sx = 72, sy = 48 },
-    poof = { sx = 0, sy = 64 }
+    poof = { sx = 0, sy = 64 },
+    skull = { sx = 80, sy = 80 }
   }
 
   local status_sprites = {
@@ -60,7 +61,7 @@ function battle_new(enemy, alternate_win_test)
       end
     end
 
-    if state.actor.status.dragon_burn then      
+    if state.actor.status.dragon_burn then
       add(effects, { animation = "fire", target = state.actor })
       add(effects, { damage = 10, target = state.actor })
       if state.actor.hp <= 10 then

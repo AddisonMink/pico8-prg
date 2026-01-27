@@ -15,6 +15,8 @@ X confirm dark elf is beatable.
 X good ending not displayed correctly
 X game crashes if you die in dialogue
 X dispel should not block armor.
+X make "corrupted forest" tile.
+X add curse animation.
 
 TESTS
 
@@ -24,7 +26,6 @@ TWEAKS
 - rest in fairy3.
 
 STRETCH
-- make "corrupted forest" tile.
 - make alternate forest and mountain tiles.
 - save and load from cartridge.
 - start menu (new | load)

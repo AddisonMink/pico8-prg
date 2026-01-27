@@ -20,17 +20,22 @@ __lua__
 #include overworld.lua
 #include game.lua
 
-dialogue = overworld_new()
+dialogue = game_new()
 result = nil
 
 function _update()
+  if result then return end
   result = dialogue:update()
 end
 
 function _draw()
   cls()
 
-  dialogue:draw(0, 0)
+  if result then
+    print(result)
+  else
+    dialogue:draw()
+  end
 end
 
 __gfx__

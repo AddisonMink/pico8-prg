@@ -154,7 +154,7 @@ function battle_new(enemy, alternate_win_test)
       state.t0 = time()
       state.dur = 0.5
     elseif effect.status then
-      if effect.target.status.dispel and effect.status ~= "strength" then return end
+      if effect.target.status.dispel and (effect.status ~= "strength" and effect.status ~= "armor") then return end
       local dur = (effect.target.status[effect.status] or 0) + effect.dur
       effect.target.status[effect.status] = dur
     elseif effect.message then

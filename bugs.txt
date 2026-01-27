@@ -14,9 +14,19 @@ X dark elf doesn't work.
 X confirm dark elf is beatable.
 X good ending not displayed correctly
 X game crashes if you die in dialogue
+X dispel should not block armor.
 
 TESTS
+
 
 TWEAKS
 - restore MP only after battle.
 - rest in fairy3.
+
+STRETCH
+- make "corrupted forest" tile.
+- make alternate forest and mountain tiles.
+- save and load from cartridge.
+- start menu (new | load)
+- title screen
+- pause menu glossary.

@@ -32,7 +32,6 @@ global.equipment[1] = true
 global.equipment[2] = true
 global.equipment[3] = true
 global.money = 1
-global.coord = { tx = 13, ty = 9, dx = 1, dy = 0 }
 
 dialogue = game_new()
 result = nil

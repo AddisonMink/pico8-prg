@@ -20,14 +20,13 @@ X add curse animation.
 
 TESTS
 
-
 TWEAKS
 - restore MP only after battle.
 - rest in fairy3.
 
 STRETCH
-- make alternate forest and mountain tiles.
 - save and load from cartridge.
 - start menu (new | load)
 - title screen
 - pause menu glossary.
+- make alternate forest and mountain tiles.

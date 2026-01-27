@@ -10,12 +10,12 @@ function overworld_new()
     ["3,5"] = tomb,
     ["11,3"] = stonefield,
     ["13,9"] = fairy3,
-    ["13,11"] = sage
+    ["13,11"] = sage,
+    ["13,7"] = dark_elf
   }
 
   local involuntary_locations = {
-    ["11,9"] = dragon,
-    ["13,7"] = good_ending
+    ["11,9"] = dragon
   }
 
   local battle_locations = {
@@ -69,7 +69,6 @@ function overworld_new()
         end
       end
     elseif state.moving then
-      
       local done = time() - state.t0 >= moving_dur
       if done then
         global.coord.tx = state.tx

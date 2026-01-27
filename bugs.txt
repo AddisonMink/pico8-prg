@@ -9,5 +9,7 @@ X dispel should not prevent using resin.
 X bad ending doesn't work.
 X burn should not work on invisible enemies.
 X dispel should not remove invisible.
+X dark elf doesn't work.
+
 - no mp restore on non-combat tiles?
 - rest in sage hut.

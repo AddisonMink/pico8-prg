@@ -21,34 +21,29 @@ __lua__
 #include game.lua
 #include title_screen.lua
 
-global.max_mp = 3
-global.mp = 3
-global.max_item_count = 6
-global.item_count = 6
-global.items = { 2, 2, 2 }
-global.spells[1] = true
-global.spells[2] = true
-global.spells[3] = true
-global.equipment[1] = true
-global.equipment[2] = true
-global.equipment[3] = true
-global.money = 1
-
-dialogue = title_screen_new()
-result = nil
+state = "title"
+title = title_screen_new()
+game = game_new()
 
 function _update()
-  if result then return end
-  result = dialogue:update()
+  if state == "title" then
+    local result = title:update()
+    if result then
+      state = "game"
+    end
+  elseif game:update() then
+    state = "title"
+    title:load()
+  end
 end
 
 function _draw()
   cls()
 
-  if result then
-    print(result)
-  else
-    dialogue:draw()
+  if state == "title" then
+    title:draw()
+  elseif state == "game" then
+    game:draw()
   end
 end
 

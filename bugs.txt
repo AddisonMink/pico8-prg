@@ -1,7 +1,0 @@
-- (bug) hud is not drawn in item shop + equipment shop.
-- (bug) hud is not shown during dialogue text crawl.
-- (bug) spell descriptions are shown in dialogue.
-- (bug) hp + mp not restored on load.
-- (problem) when you buy equipment, your game is not saved, so if you die you have to buy it again.
-- (bug) game crashes after ending (game 105, draw_util 82, game 12, draw2 = next:draw() end, next is nil)
-- (bug) battle animations don't respect sprite offsets.

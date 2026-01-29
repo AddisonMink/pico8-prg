@@ -54,7 +54,7 @@ function new_game()
   dset(8, 0)
   dset(9, 0)
 
-  for i = 1, 8 do
+  for i = 1, 9 do
     dset(9 + i, 0)
   end
 end

@@ -124,7 +124,7 @@ I will teach you to conjure a <c8>FIRE SPRITE<r>. He, too, seeks his <c9>MISSING
 @npc wizard
 @title <c6>NARRATOR<r>
 @body
-You learned the <c8>CANDLE<r> spell! (O <i176>x1)
+You learned the <c8>CANDLE<r> spell!
 <n><n>
 You also gained <c12>1 MAX MP<r>!
 @body
@@ -316,7 +316,7 @@ The <c2>CURSED BEINGS<r> cannot die, so I will teach you a <c14>PRAYER<r> to bre
 @npc priestess
 @title <c6>NARRATOR<r>
 @body
-You learned the <c14>DISPEL<r> spell! (O <i177>x3, Remove <i162>, <i164>)
+You learned the <c14>DISPEL<r> spell!
 <n>
 You also gained <c12>1 MAX MP<r>!
 @body
@@ -625,7 +625,7 @@ May it afflict the last of the <c13>OLD MASTERS<r>.
 @npc ghost
 @title <c6>NARRATOR<r>
 @body
-You learned the <c2>CURSE<r> spell! (O <i162>x1, <i178>x5 )
+You learned the <c2>CURSE<r> spell!
 <n><n>
 You also gained <c12>1 MAX MP<r>!
 @body

@@ -25,7 +25,7 @@ function overworld_new()
     ["7,9"] = { enemy_goblin_warrior, enemy_goblin },
     ["9,9"] = { enemy_goblin_mage, enemy_goblin_warrior },
     ["9,11"] = { enemy_goblin_warrior, enemy_goblin },
-    ["11,11"] = { enemy_goblin_mage, enemy_goblin_warrior },
+    ["11,11"] = { enemy_goblin_mage, enemy_goblin },
     ["9,7"] = { enemy_zombie, enemy_zombie },
     ["7,5"] = { enemy_zombie, enemy_zombie },
     ["5,5"] = { enemy_ghost, enemy_zombie },

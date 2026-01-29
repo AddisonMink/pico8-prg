@@ -30,6 +30,7 @@ function item_shop_new()
 
   function me:draw()
     local x, y = x, y
+    draw_hud()
     draw_background(background.town)
     draw_npcs(npc.townsman)
     draw_panel(1, x, y, w, h)
@@ -81,12 +82,14 @@ function equipment_shop_new()
       else
         global.equipment[index] = true
         global.money -= equipment_data[index].money_cost
+        save_game()
       end
     end
   end
 
   function me:draw()
     local x, y = x, y
+    draw_hud()
     draw_background(background.town)
     draw_npcs(npc.townsman)
     draw_panel(1, x, y, w, h)

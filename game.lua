@@ -1,7 +1,8 @@
 function game_new()
   local fade_dur = 0.5
   local overworld = overworld_new()
-  local state = { title = title_screen_new() }
+  local title_screen = title_screen_new()
+  local state = { title = title_screen }
   local me = {}
 
   local function fade_out(current, next, next_state)
@@ -75,6 +76,7 @@ function game_new()
         fade_out(state.title, opening_text_crawl, { opening = opening_text_crawl })
       elseif result then
         load_game()
+        reset_player()
         fade_out(state.title, overworld, { overworld = overworld })
       end
     elseif state.opening and state.opening.update() then
@@ -86,9 +88,9 @@ function game_new()
     elseif state.location then
       update_location()
     elseif state.bad_ending and state.bad_ending.update() then
-      fade_out(state.bad_ending, title, { title = title_screen_new() })
+      fade_out(state.bad_ending, title_screen, { title = title_screen })
     elseif state.good_ending and state.good_ending.update() then
-      fade_out(state.good_ending, title, { title = title_screen_new() })
+      fade_out(state.good_ending, title_screen, { title = title_screen })
     elseif state.fade_out and time() - state.t0 >= fade_dur then
       fade_in(state.draw2, state.next_state)
     elseif state.fade_in and time() - state.t0 >= fade_dur then

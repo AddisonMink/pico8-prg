@@ -165,6 +165,7 @@ function dialogue_new(load, string, tools)
     rich_text_print(page.title, x, y)
     y += 10
     page.body:draw(x, y)
+    draw_hud()
 
     if not page.text_crawl_done then return end
 
@@ -176,8 +177,6 @@ function dialogue_new(load, string, tools)
       end
       y += 10
     end
-
-    draw_hud()
   end
 
   local function draw_next_page()

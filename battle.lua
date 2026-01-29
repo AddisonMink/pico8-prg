@@ -364,6 +364,7 @@ function battle_new(enemy, alternate_win_test)
       local string = "d e f e a t"
       print(string, 64 - #string * 2, 88, 8)
     end
+    draw_hud()
   end
 
   me:load()

@@ -1,7 +1,7 @@
 function game_new()
   local fade_dur = 0.5
   local overworld = overworld_new()
-  local state = { opening = opening_text_crawl }
+  local state = { title = title_screen_new() }
   local me = {}
 
   local function fade_out(current, next, next_state)
@@ -66,8 +66,19 @@ function game_new()
   end
 
   function me:update()
-    if state.opening and state.opening.update() then
-      state = { overworld = overworld }
+    if state.title then
+      local result = state.title:update()
+      if result == "new" then
+        new_game()
+        load_game()
+        opening_text_crawl:load()
+        fade_out(state.title, opening_text_crawl, { opening = opening_text_crawl })
+      elseif result then
+        load_game()
+        fade_out(state.title, overworld, { overworld = overworld })
+      end
+    elseif state.opening and state.opening.update() then
+      fade_out(state.opening, overworld, { overworld = overworld })
     elseif state.overworld then
       update_overworld()
     elseif state.battle then
@@ -75,9 +86,9 @@ function game_new()
     elseif state.location then
       update_location()
     elseif state.bad_ending and state.bad_ending.update() then
-      return "bad_ending"
+      fade_out(state.bad_ending, title, { title = title_screen_new() })
     elseif state.good_ending and state.good_ending.update() then
-      return "good_ending"
+      fade_out(state.good_ending, title, { title = title_screen_new() })
     elseif state.fade_out and time() - state.t0 >= fade_dur then
       fade_in(state.draw2, state.next_state)
     elseif state.fade_in and time() - state.t0 >= fade_dur then
@@ -92,15 +103,13 @@ function game_new()
     elseif state.fade_in then
       local progress = (time() - state.t0) / fade_dur
       screen_fade_in(state.draw, progress)
+    elseif state.title then
+      state.title:draw()
     elseif state.opening then
-      draw_map()
-      dither()
       state.opening:draw()
     elseif state.bad_ending then
       state.bad_ending:draw()
     elseif state.good_ending then
-      draw_map()
-      dither()
       state.good_ending:draw()
     elseif state.overworld then
       overworld:draw()
@@ -108,10 +117,6 @@ function game_new()
       state.battle:draw()
     elseif state.location then
       state.location:draw()
-    end
-
-    if not state.opening and not state.good_ending and not state.bad_ending then
-      draw_hud()
     end
   end
 

@@ -1,4 +1,4 @@
-function big_text_crawl_new(text)
+function big_text_crawl_new(text, draw_background)
   local speed = 0.05
   local pages = {}
   local page_idx = 1
@@ -37,6 +37,10 @@ function big_text_crawl_new(text)
   end
 
   function me:draw()
+    if draw_background then
+      draw_map()
+      dither()
+    end
     pages[page_idx]:draw(4, 4, true)
   end
 
@@ -44,7 +48,8 @@ function big_text_crawl_new(text)
   return me
 end
 
-opening_text_crawl = big_text_crawl_new([[
+opening_text_crawl = big_text_crawl_new(
+  [[
 @page
 <n>
 Long ago, a <c13>SAGE<r> created an unchanging paradise in a dying world.
@@ -61,7 +66,8 @@ Then, the <c13>DARK ELF<r> of the forest hinterlands conjured the brutish
 <n><n>
 YOU are an <c11>ELF<r>. You have set out to put things right. To defeat the
 <c13>DARK ELF<r> and find the <c13>SAGE<r> who can heal the <c11>FOREST<r>.
-]])
+]], true
+)
 
 bad_ending_text_crawl = big_text_crawl_new([[
 @page
@@ -73,7 +79,8 @@ The <c11>FOREST<r> and the <c11>ELFS<r> will die as you <c8>STRUGGLE<r> and <c8>
 Still, maybe there is something for you beyond the <c14>HORIZON<r>.
 ]])
 
-good_ending_text_crawl = big_text_crawl_new([[
+good_ending_text_crawl = big_text_crawl_new(
+  [[
 @page
 <n><n>
 The <c13>SAGE<r> is gone, and the <c13>CORRUPTION<r> of the <c11>FOREST<r> has ceased. The
@@ -81,4 +88,5 @@ The <c13>SAGE<r> is gone, and the <c13>CORRUPTION<r> of the <c11>FOREST<r> has c
 <c11>FOREST<r> will never be restored.
 <n><n>
 Still, many <c9>FAIRIES<r> remain, and the gentle <c11>FOREST<r> of your youth can go on almost as it was.
-]])
+]], true
+)

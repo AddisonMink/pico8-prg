@@ -143,6 +143,8 @@ function overworld_new()
       pal()
       print(msg, x, y)
     end
+
+    draw_hud()
   end
 
   return me

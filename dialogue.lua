@@ -176,6 +176,8 @@ function dialogue_new(load, string, tools)
       end
       y += 10
     end
+
+    draw_hud()
   end
 
   local function draw_next_page()

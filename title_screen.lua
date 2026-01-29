@@ -9,7 +9,8 @@ function title_screen_new()
   function me:update()
     index = (btnp(2) or btnp(3)) and (index % 2 + 1) or index
     if btnp(4) then
-      return index == 1 and "new" or "load"
+      return index == 1 and "new"
+          or dget(0) == 1 and "load"
     end
   end
 
@@ -24,13 +25,14 @@ function title_screen_new()
     camera()
 
     local x, y = 38, 64
+    local load_color = dget(0) == 1 and 7 or 5
     draw_panel(1, x, y, 48, 24)
     x += 2
     y += 4
     spr(16, x, (index - 1) * 10 + y)
     print("nEW gAME", x + 10, y, 7)
     y += 10
-    print("cONTINUE", x + 10, y, 7)
+    print("cONTINUE", x + 10, y, load_color)
   end
   return me
 end

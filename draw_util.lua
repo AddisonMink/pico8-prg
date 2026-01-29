@@ -10,19 +10,6 @@ function draw_background(id)
   end
 end
 
-function dither()
-  for x = 0, 127 do
-    for y = 0, 127 do
-      local dark = y % 2 == 0 and x % 2 == 0
-          or y % 2 == 1 and x % 2 == 1
-
-      if dark then
-        pset(x, y, 5)
-      end
-    end
-  end
-end
-
 function spr_outline(id, x, y, flip_x)
   tint_palette(0)
   for x = x - 1, x + 1 do

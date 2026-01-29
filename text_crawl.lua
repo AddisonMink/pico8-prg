@@ -1,5 +1,5 @@
 function text_crawl_new(string, w, delay)
-  delay = delay or 0.04
+  delay = delay or 0.125
   local tokens = rich_text_parse(string, w)
   local t0 = 0
   local next_token_idx = 1
@@ -29,23 +29,13 @@ function text_crawl_new(string, w, delay)
     end
   end
 
-  function me:draw(x, y, outline)
+  function me:draw(x, y)
     local start_x, color = x, 7
 
     for i, token in ipairs(tokens) do
-      if i == next_token_idx then
-        rich_text_draw_token(token, start_x, color, x, y, 5)
-        break
-      else
-        if outline then
-          for x = x - 1, x + 1 do
-            for y = y - 1, y + 1 do
-              rich_text_draw_token(token, start_x, 0, x, y)
-            end
-          end
-        end
-        x, y, color = rich_text_draw_token(token, start_x, color, x, y)
-      end
+      local last = i == next_token_idx
+      x, y, color = rich_text_draw_token(token, start_x, color, x, y, last and 5)
+      if last then break end
     end
   end
 

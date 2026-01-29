@@ -104,3 +104,11 @@ function update_index(index, max)
       or btnp(3) and index % max + 1
       or index
 end
+
+function bool_to_int(b)
+  return b and 1 or 0
+end
+
+function int_to_bool(i)
+  return i ~= 0
+end

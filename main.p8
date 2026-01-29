@@ -21,18 +21,16 @@ __lua__
 #include game.lua
 #include title_screen.lua
 
-game = battle_menu_new()
+cartdata("amink_rpg")
+game = game_new()
 
 function _update()
-  if not result then
-    result = game:update()
-  end
+  game:update()
 end
 
 function _draw()
   cls()
-
-  if result then print(result, 0, 0, 7) else game:draw() end
+  game:draw()
 end
 
 __gfx__

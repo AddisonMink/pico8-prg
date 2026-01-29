@@ -68,8 +68,8 @@ Good luck!
     item_shop = item_shop_new(),
     equipment_shop = equipment_shop_new(),
     go_to_hint = function()
-      local page = not global.flags.wizard and 4
-          or not global.flags.temple and 5
+      local page = not global.flags[flag_id.wizard] and 4
+          or not global.flags[flag_id.priestess] and 5
           or 7
       return { page = page }
     end,
@@ -78,7 +78,7 @@ Good luck!
 )
 
 wizard = dialogue_new(
-  function() return global.flags.wizard and 7 end,
+  function() return global.flags[flag_id.wizard] and 7 end,
   [[
 @page
 @background tower
@@ -154,7 +154,7 @@ The <c3>GOBLINS<r> have been hunting us, but some <c9>FAIRIES<r> still survive! 
   {
     visit = function()
       global.money += 2
-      global.flags.wizard = true
+      global.flags[flag_id.wizard] = true
     end,
     learn = function()
       global.max_mp += 1
@@ -165,7 +165,7 @@ The <c3>GOBLINS<r> have been hunting us, but some <c9>FAIRIES<r> still survive! 
 )
 
 fairy1 = dialogue_new(
-  function() return global.flags.fairy1 and 2 end,
+  function() return global.flags[flag_id.fairy1] and 2 end,
   [[
 @page
 @background forest
@@ -194,13 +194,13 @@ We do not want to be changed!
     visit = function()
       global.money += 2
       global.max_item_count += 1
-      global.flags.fairy1 = true
+      global.flags[flag_id.fairy1] = true
     end
   }
 )
 
 fairy2 = dialogue_new(
-  function() return global.flags.fairy2 and 2 end,
+  function() return global.flags[flag_id.fairy2] and 2 end,
   [[
 @page
 @background forest
@@ -229,13 +229,13 @@ We cower in fear of it.
     visit = function()
       global.money += 2
       global.max_item_count += 1
-      global.flags.fairy2 = true
+      global.flags[flag_id.fairy2] = true
     end
   }
 )
 
 fairy3 = dialogue_new(
-  function() return global.flags.fairy3 and 2 end,
+  function() return global.flags[flag_id.fairy3] and 2 end,
   [[
 @page
 @background forest
@@ -264,13 +264,13 @@ The <c11>FOREST<r> will die.
     visit = function()
       global.money += 2
       global.max_item_count += 1
-      global.flags.fairy3 = true
+      global.flags[flag_id.fairy3] = true
     end
   }
 )
 
 priestess = dialogue_new(
-  function() return global.flags.temple and 6 end,
+  function() return global.flags[flag_id.priestess] and 6 end,
   [[
 @page
 @background temple
@@ -335,7 +335,7 @@ The <c14>PRAYER<r> I taught you can break all manner of foul <c13>ENCHANTMENTS<r
   {
     visit = function()
       global.money += 2
-      global.flags.temple = true
+      global.flags[flag_id.priestess] = true
     end,
     learn = function()
       global.max_mp += 1
@@ -346,7 +346,7 @@ The <c14>PRAYER<r> I taught you can break all manner of foul <c13>ENCHANTMENTS<r
 )
 
 sage = dialogue_new(
-  function() return global.flags.sage and 5 end,
+  function() return global.flags[flag_id.sage] and 5 end,
   [[
 @page
 @npc sage
@@ -391,7 +391,7 @@ The <c13>SAGE<r> has left. The <c2>DARKNESS<r> of the <c11>FOREST<r> deepens.
 ]],
   {
     visit = function()
-      global.flags.sage = true
+      global.flags[flag_id.sage] = true
       mset(11, 4, 165)
       mset(13, 8, 165)
     end
@@ -400,8 +400,8 @@ The <c13>SAGE<r> has left. The <c2>DARKNESS<r> of the <c11>FOREST<r> deepens.
 
 dragon = dialogue_new(
   function()
-    return global.flags.dragon_defeated and 3
-        or global.flags.dragon_cured and 5
+    return global.flags[flag_id.dragon_defeated] and 3
+        or global.flags[flag_id.dragon_dead] and 5
   end,
   [[
 @page
@@ -454,10 +454,10 @@ The <c12>DRAGON<r> is gone.
       if battle_result.defeat then
         return { result = "game_over" }
       elseif battle_result.victory then
-        global.flags.dragon_defeated = true
+        global.flags[flag_id.dragon_defeated] = true
         return { page = 3 }
       elseif battle_result.alt_victory then
-        global.flags.dragon_cured = true
+        global.flags[flag_id.dragon_dead] = true
         return { page = 4 }
       end
     end,
@@ -584,7 +584,7 @@ The <c13>DARK ELF<r>'s ashen remains blow away on the wind, out over the <c5>STO
 )
 
 tomb = dialogue_new(
-  function() return global.flags.tomb and 5 end,
+  function() return global.flags[flag_id.tomb] and 5 end,
   [[
 @page
 @background tower
@@ -644,7 +644,7 @@ The <c2>TOMB<r> is silent.
   {
     visit = function()
       global.money += 3
-      global.flags.tomb = true
+      global.flags[flag_id.tomb] = true
     end,
     learn = function()
       global.spells[3] = true

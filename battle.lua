@@ -1,9 +1,9 @@
 function battle_new(enemy, alternate_win_test)
   animations = {
     slash = { sx = 24, sy = 48, sfx = 10 },
-    fire = { sx = 72, sy = 48, sfx = 10 },
-    poof = { sx = 0, sy = 64, sfx = 10 },
-    skull = { sx = 80, sy = 80, sfx = 10 }
+    fire = { sx = 72, sy = 48, sfx = 11 },
+    poof = { sx = 0, sy = 64, sfx = 12 },
+    skull = { sx = 80, sy = 80, sfx = 13 }
   }
 
   local status_sprites = {

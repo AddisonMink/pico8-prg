@@ -29,8 +29,10 @@ function game_new()
     if not result then return end
 
     if result.battle then
+      music(0)
       fade_out(overworld, result.battle, { battle = result.battle })
     elseif result.location then
+      music(-1)
       result.location:load()
       fade_out(overworld, result.location, { location = result.location })
     end
@@ -41,8 +43,10 @@ function game_new()
     if not result then return end
 
     if result.victory then
+      music(3)
       fade_out(state.battle, overworld, { overworld = overworld })
     elseif result.defeat then
+      music(3)
       load_game()
       reset_player()
       fade_out(state.battle, overworld, { overworld = overworld })
@@ -80,6 +84,7 @@ function game_new()
         fade_out(state.title, overworld, { overworld = overworld })
       end
     elseif state.opening and state.opening.update() then
+      music(3)
       fade_out(state.opening, overworld, { overworld = overworld })
     elseif state.overworld then
       update_overworld()

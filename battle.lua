@@ -1,9 +1,9 @@
 function battle_new(enemy, alternate_win_test)
   animations = {
-    slash = { sx = 24, sy = 48 },
-    fire = { sx = 72, sy = 48 },
-    poof = { sx = 0, sy = 64 },
-    skull = { sx = 80, sy = 80 }
+    slash = { sx = 24, sy = 48, sfx = 10 },
+    fire = { sx = 72, sy = 48, sfx = 10 },
+    poof = { sx = 0, sy = 64, sfx = 10 },
+    skull = { sx = 80, sy = 80, sfx = 10 }
   }
 
   local status_sprites = {
@@ -134,6 +134,7 @@ function battle_new(enemy, alternate_win_test)
       state.animation = { coord = coord, target = effect.target }
       state.t0 = time()
       state.dur = 0.3
+      sfx(coord.sfx)
     elseif effect.flash then
       state.flash = { color = effect.flash, target = effect.target }
       state.t0 = time()
@@ -191,10 +192,14 @@ function battle_new(enemy, alternate_win_test)
     if not done then return end
 
     if global.player.hp <= 0 then
+      music(-1)
       state = { defeat = true }
     elseif enemy.hp <= 0 then
+      music(-1)
+      sfx(9)
       state = { victory = true }
     elseif alternate_win_test and alternate_win_test(global.player, enemy) then
+      music(-1)      
       state = { alt_victory = true }
     elseif state.actor == enemy then
       state = { start_turn = true, actor = global.player }

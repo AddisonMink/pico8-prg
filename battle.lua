@@ -146,9 +146,11 @@ function battle_new(enemy, alternate_win_test)
         if effect.target.status.undead then
           add(state.effects, { message = "undead" }, 1)
           add(state.effects, { heal = true, target = effect.target }, 2)
+          --sfx(24)
         else
           effect.target.state = "dead"
           add(state.effects, { flash = 1, target = effect.target }, 1)
+          sfx(13)
         end
       end
     elseif effect.player_attack then
@@ -156,9 +158,13 @@ function battle_new(enemy, alternate_win_test)
       state.t0 = time()
       state.dur = 0.5
     elseif effect.status then
-      if effect.target.status.dispel and (effect.status ~= "strength" and effect.status ~= "armor") then return end
-      local dur = (effect.target.status[effect.status] or 0) + effect.dur
-      effect.target.status[effect.status] = dur
+      local status = effect.status
+      if effect.target.status.dispel and (status ~= "strength" and status ~= "armor") then return end
+      local dur = (effect.target.status[status] or 0) + effect.dur
+      effect.target.status[status] = dur
+      if status == "strength" or status == "armor" or status == "invisible" or status == "dispel" then
+        sfx(24)
+      end
     elseif effect.message then
       state.message = effect.message
       state.t0 = time()
@@ -199,7 +205,7 @@ function battle_new(enemy, alternate_win_test)
       sfx(9)
       state = { victory = true }
     elseif alternate_win_test and alternate_win_test(global.player, enemy) then
-      music(-1)      
+      music(-1)
       state = { alt_victory = true }
     elseif state.actor == enemy then
       state = { start_turn = true, actor = global.player }

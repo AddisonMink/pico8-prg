@@ -18,12 +18,17 @@ function item_shop_new()
   function me:update()
     index = update_index(index, 4)
 
-    if btnp(4) and option_valid(index) then
-      if index == 4 then
-        return true
+    if btnp(4) then
+      if option_valid(index) then
+        if index == 4 then
+          return true
+        else
+          global.items[index] += 1
+          global.item_count += 1
+          sfx(23)
+        end
       else
-        global.items[index] += 1
-        global.item_count += 1
+        sfx(22)
       end
     end
   end
@@ -76,13 +81,18 @@ function equipment_shop_new()
   function me:update()
     index = update_index(index, 4)
 
-    if btnp(4) and option_valid(index) then
-      if index == 4 then
-        return true
+    if btnp(4) then
+      if option_valid(index) then
+        if index == 4 then
+          return true
+        else
+          global.equipment[index] = true
+          global.money -= equipment_data[index].money_cost
+          save_game()
+          sfx(23)
+        end
       else
-        global.equipment[index] = true
-        global.money -= equipment_data[index].money_cost
-        save_game()
+        sfx(22)
       end
     end
   end

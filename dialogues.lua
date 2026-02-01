@@ -64,6 +64,7 @@ Good luck!
     rest_and_save = function()
       save_game()
       reset_player()
+      sfx(23)
     end,
     item_shop = item_shop_new(),
     equipment_shop = equipment_shop_new(),
@@ -155,11 +156,13 @@ The <c3>GOBLINS<r> have been hunting us, but some <c9>FAIRIES<r> still survive! 
     visit = function()
       global.money += 2
       global.flags[flag_id.wizard] = true
+      sfx(23)
     end,
     learn = function()
       global.max_mp += 1
       global.mp += 1
       global.spells[1] = true
+      sfx(23)
     end
   }
 )
@@ -195,6 +198,7 @@ We do not want to be changed!
       global.money += 2
       global.max_item_count += 1
       global.flags[flag_id.fairy1] = true
+      sfx(23)
     end
   }
 )
@@ -230,6 +234,7 @@ We cower in fear of it.
       global.money += 2
       global.max_item_count += 1
       global.flags[flag_id.fairy2] = true
+      sfx(23)
     end
   }
 )
@@ -265,6 +270,7 @@ The <c11>FOREST<r> will die.
       global.money += 2
       global.max_item_count += 1
       global.flags[flag_id.fairy3] = true
+      sfx(23)
     end
   }
 )
@@ -336,11 +342,13 @@ The <c14>PRAYER<r> I taught you can break all manner of foul <c13>ENCHANTMENTS<r
     visit = function()
       global.money += 2
       global.flags[flag_id.priestess] = true
+      sfx(23)
     end,
     learn = function()
       global.max_mp += 1
       global.mp += 1
       global.spells[2] = true
+      sfx(23)
     end
   }
 )
@@ -645,11 +653,13 @@ The <c2>TOMB<r> is silent.
     visit = function()
       global.money += 3
       global.flags[flag_id.tomb] = true
+      sfx(23)
     end,
     learn = function()
       global.spells[3] = true
       global.max_mp += 1
       global.mp += 1
+      sfx(23)
     end
   }
 )

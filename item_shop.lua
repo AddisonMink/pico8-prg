@@ -30,6 +30,9 @@ function item_shop_new()
       else
         sfx(22)
       end
+    elseif btnp(5) and index < 4 and global.items[index] > 0 then
+      global.items[index] -= 1
+      global.item_count -= 1
     end
   end
 

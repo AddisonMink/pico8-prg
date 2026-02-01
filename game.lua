@@ -29,7 +29,6 @@ function game_new()
     if not result then return end
 
     if result.battle then
-      music(0)
       fade_out(overworld, result.battle, { battle = result.battle })
     elseif result.location then
       if result.location == townsman then
@@ -45,10 +44,8 @@ function game_new()
     if not result then return end
 
     if result.victory then
-      music(3)
       fade_out(state.battle, overworld, { overworld = overworld })
     elseif result.defeat then
-      music(3)
       load_game()
       reset_player()
       fade_out(state.battle, overworld, { overworld = overworld })
@@ -59,6 +56,10 @@ function game_new()
     local result = state.location:update()
     if not result then return end
 
+    if state.location == townsman then
+      music(3)
+    end
+
     if result == "game_over" then
       load_game()
       reset_player()
@@ -68,7 +69,6 @@ function game_new()
     elseif result == "good_ending" then
       fade_out(state.location, good_ending_text_crawl, { good_ending = good_ending_text_crawl })
     else
-      music(3)
       fade_out(state.location, overworld, { overworld = overworld })
     end
   end
@@ -84,7 +84,6 @@ function game_new()
       elseif result then
         load_game()
         reset_player()
-        music(3)
         fade_out(state.title, overworld, { overworld = overworld })
       end
     elseif state.opening and state.opening.update() then

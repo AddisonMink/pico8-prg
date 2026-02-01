@@ -50,25 +50,14 @@ function battle_new(enemy, alternate_win_test)
     end
 
     local effects = {}
-    if state.actor.status.burn then
-      local damage = state.actor.status.invisible and 0 or 3
+
+    local damage = state.actor.status.burn and 3
+        or state.actor.status.dragon_burn and 10
+
+    if damage then
+      local damage = state.actor.status.invisible and 0 or damage
       add(effects, { animation = "fire", target = state.actor })
       add(effects, { damage = damage, target = state.actor })
-      if state.actor.hp <= 3 then
-        next_state = state.actor == enemy
-            and { victory = true }
-            or { defeat = true }
-      end
-    end
-
-    if state.actor.status.dragon_burn then
-      add(effects, { animation = "fire", target = state.actor })
-      add(effects, { damage = 10, target = state.actor })
-      if state.actor.hp <= 10 then
-        next_state = state.actor == enemy
-            and { victory = true }
-            or { defeat = true }
-      end
     end
 
     dec_status(state.actor)
@@ -146,7 +135,7 @@ function battle_new(enemy, alternate_win_test)
         if effect.target.status.undead then
           add(state.effects, { message = "undead" }, 1)
           add(state.effects, { heal = true, target = effect.target }, 2)
-          --sfx(24)
+          sfx(25)
         else
           effect.target.state = "dead"
           add(state.effects, { flash = 1, target = effect.target }, 1)
@@ -181,9 +170,22 @@ function battle_new(enemy, alternate_win_test)
     local effect_ready = time() - state.t0 >= state.dur
     if not effect_ready then return end
     if #state.effects == 0 then
-      state = state.next_state
-      state.t0 = time()
-      state.dur = 0.5
+      if global.player.hp <= 0 then
+        music(-1)
+        sfx(26)
+        state = { defeat = true }
+      elseif enemy.hp <= 0 then
+        music(-1)
+        sfx(9)
+        state = { victory = true }
+      elseif alternate_win_test and alternate_win_test(global.player, enemy) then
+        music(-1)
+        state = { alt_victory = true }
+      else
+        state = state.next_state
+        state.t0 = time()
+        state.dur = 0.5
+      end
     else
       state.flash = nil
       state.animation = nil
@@ -197,17 +199,7 @@ function battle_new(enemy, alternate_win_test)
     local done = time() - state.t0 >= state.dur
     if not done then return end
 
-    if global.player.hp <= 0 then
-      music(-1)
-      state = { defeat = true }
-    elseif enemy.hp <= 0 then
-      music(-1)
-      sfx(9)
-      state = { victory = true }
-    elseif alternate_win_test and alternate_win_test(global.player, enemy) then
-      music(-1)
-      state = { alt_victory = true }
-    elseif state.actor == enemy then
+    if state.actor == enemy then
       state = { start_turn = true, actor = global.player }
     elseif state.actor == global.player then
       state = { start_turn = true, actor = enemy }
@@ -336,6 +328,7 @@ function battle_new(enemy, alternate_win_test)
       end
     end
 
+    music(0)
     state = { start_turn = true, actor = global.player }
   end
 
@@ -351,10 +344,13 @@ function battle_new(enemy, alternate_win_test)
     elseif state.enemy_turn then
       enemy_turn()
     elseif state.victory and btnp(4) then
+      music(3)
       return { victory = true }
     elseif state.alt_victory then
+      music(3)
       return { alt_victory = true }
     elseif state.defeat and btnp(4) then
+      music(3)
       return { defeat = true }
     end
   end

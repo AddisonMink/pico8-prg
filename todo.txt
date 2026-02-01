@@ -3,13 +3,14 @@ X add "invalid option" sound effect. (22)
 X add "buff" sfx (24)
 X shorten fire sfx
 X add "death" 13
-
--? add "undead" 25
--? add defeat sfx 26
+X win sfx doesn't play when you win by burn.
+X add "undead" 25
+X add defeat sfx 26
+X don't restart overworld music when exiting location mode (unless other music was playing)
+X use battle music in dialogue battles.
 
 - add save sfx
 - improve "get item" sfx
-
-- don't restart overworld music when exiting location mode (unless other music was playing)
-- win sfx doesn't play when you win by burn.
-- use battle music in dialogue battles.
+- play get_item sfx when getting coins or spells.
+- cancel should un-buy items.
+- make undead sfx lower.

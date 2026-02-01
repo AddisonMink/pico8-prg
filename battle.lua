@@ -93,7 +93,7 @@ function battle_new(enemy, alternate_win_test)
     elseif result.item then
       global.items[result.item.id] -= 1
       global.item_count -= 1
-      effects = result.item.compile_effects(global.player)
+      effects = { result.item.effect }
     elseif result.spell then
       global.mp -= result.spell.mp_cost
       effects = result.spell.compile_effects(enemy)

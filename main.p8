@@ -23,11 +23,9 @@ __lua__
 
 cartdata("amink_rpg")
 game = game_new()
-music(-1)
+music(3)
 
 function _update()
-  global.mp = 1
-global.spells[1] = true
   game:update()
 end
 

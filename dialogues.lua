@@ -125,7 +125,7 @@ I will teach you to conjure a <c8>FIRE SPRITE<r>. He, too, seeks his <c9>MISSING
 @title <c6>NARRATOR<r>
 @body
 You learned the <c8>CANDLE<r> spell!
-<n><n>
+<n>
 You also gained <c12>1 MAX MP<r>!
 @body
 @option Continue

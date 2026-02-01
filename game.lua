@@ -88,7 +88,6 @@ function game_new()
         fade_out(state.title, overworld, { overworld = overworld })
       end
     elseif state.opening and state.opening.update() then
-      music(3)
       fade_out(state.opening, overworld, { overworld = overworld })
     elseif state.overworld then
       update_overworld()

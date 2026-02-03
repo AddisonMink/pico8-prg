@@ -33,6 +33,8 @@ function title_screen_new()
     print("nEW gAME", x + 10, y, 7)
     y += 10
     print("cONTINUE", x + 10, y, load_color)
+
+    print("s a g e ' s  h o l l o w", 16, 24, 6)
   end
   return me
 end

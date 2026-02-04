@@ -34,7 +34,7 @@ function title_screen_new()
     y += 10
     print("cONTINUE", x + 10, y, load_color)
 
-    print("s a g e ' s  h o l l o w", 16, 24, 6)
+    print("s a g e ' s  h o l l o w", 16, 24, 7)
   end
   return me
 end

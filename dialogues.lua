@@ -1,3 +1,12 @@
+function fairy_visit(fairy_flag)
+  return function()
+    global.money += 2
+    global.max_item_count += 1
+    global.flags[fairy_flag] = true
+    sfx(23)
+  end
+end
+
 townsman = dialogue_new(
   function() end,
   [[
@@ -194,12 +203,7 @@ We do not want to be changed!
 @option Continue
 ]],
   {
-    visit = function()
-      global.money += 2
-      global.max_item_count += 1
-      global.flags[flag_id.fairy1] = true
-      sfx(23)
-    end
+    visit = fairy_visit(flag_id.fairy1)
   }
 )
 
@@ -230,12 +234,7 @@ We cower in fear of it.
 @option Continue
 ]],
   {
-    visit = function()
-      global.money += 2
-      global.max_item_count += 1
-      global.flags[flag_id.fairy2] = true
-      sfx(23)
-    end
+    visit = fairy_visit(flag_id.fairy2)
   }
 )
 
@@ -266,12 +265,7 @@ The <c11>FOREST<r> will die.
 @option Continue
 ]],
   {
-    visit = function()
-      global.money += 2
-      global.max_item_count += 1
-      global.flags[flag_id.fairy3] = true
-      sfx(23)
-    end
+    visit = fairy_visit(flag_id.fairy3)
   }
 )
 

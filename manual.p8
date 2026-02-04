@@ -3,19 +3,69 @@ version 42
 __lua__
 #include rich_text.lua
 
-status_text = [[
-<c6>STATUSES<r>
+overworld_page = [[
+<c6>OVERWORLD<r>
 <n><n>
-<c6>STATUSES<r> have various effects on characters in battle.
+The <c6>OVERWORLD<r> is network of nodes.
 <n><n>
-A <c6>STATUS<r>'s duration is show by a number of dots below it's icon.
+You start in the <c15>TOWN<r> node, where you can heal, save, and buy
+items and equipment.
+<n>
+Some nodes are <c6>STORY<r> nodes. Visiting these nodes will advance the story.
 <n><n>
-At the beginning of a character's turn, the duration of each <c6>STATUS<r>
-is reduced by 1.
+Most nodes are <c6>BATTLE<r> nodes, where you fight a monster.
 ]]
 
-status_glossary_1 = [[
-<c6>STATUS ICONS 1<r>
+overworld_page_cont = [[
+<c6>OVERWORLD Cont.<r>
+<n><n>
+When you defeat the monster on a <c6>BATTLE<r> node, it will be replaced by a weaker
+monster. <c6>BATTLE<r> nodes reset when you visit <c15>TOWN<r>.
+<n><n>
+Every time you move to a new node, you recover <c12>1 MP<r>.
+]]
+
+battle_page = [[
+<c6>BATTLE<r>
+<n><n>
+Battles are deterministic and turn-based. You always go first.
+<n><n>
+In battle you have 4 options:
+<n><n>
+ATTACK - Deal 2 damage to your opponent.
+<n><n>
+<c15>ITEM<r> - Use an <c15>ITEM<r> to give yourself a good <c6>STATUS<r>.
+]]
+
+battle_page_cont = [[
+<c6>BATTLE Cont.<r>
+<n><n>
+<c12>SPELL<r> - Use a <c12>SPELL<r> to give your opponent a bad <c6>STATUS<r>.
+<n>
+<c6>WAIT<r> - Skip your turn.
+<n>
+Attacks ALWAYS do 2 damage unless modified by a <c6>STATUS<r>. This is also true for monsters.
+]]
+
+status_page = [[
+<c6>STATUSES<r>
+<n><n>
+<c6>STATUSES<r> have various effects in battle, such as increasing your attack damage or
+reducing incoming damage.
+<n><n>
+They are indicated by an icon below the character. The pips below the indicate how many
+turns the <c6>STATUS<r> will last.
+]]
+
+status_page_cont = [[
+<c6>STATUSES Cont.<r>
+<n><n>
+At the beginning of each character's turn after all <c6>STATUS<r> effects have resolved,
+the duration of each <c6>STATUS will decrease by 1.
+]]
+
+status_list_page = [[
+<c6>STATUS LIST<r>
 <n><n>
 <c6>ARMOR<r> <i161> - Take 2 less damage from attacks.
 <n>
@@ -26,8 +76,8 @@ status_glossary_1 = [[
 <c9>BURN<r> <i176> - Take 3 damage at start of turn.
 ]]
 
-status_glossary_2 = [[
-<c6>STATUS ICONS 2<r>
+status_list_page_cont = [[
+<c6>STATUS LIST Cont.<r>
 <n><n>
 <c13>INVISIBLE<r> <i163> - Take no damage.
 <n><n>
@@ -38,46 +88,25 @@ status_glossary_2 = [[
 <c13>ENCHANTED<r> <i164> - Controlled by <c13>ANOTHER'S WILL<r>.
 ]]
 
-equipment = [[
-<c15>EQUIPMENT<r>
-<n><n>
-<c15>EQUIPMENT<r> gives you 1 tick of a <c6>STATUS<r> at the beginning of each battle.
-You can buy them in <15>TOWN<r> using <c10>$<r>.
-<n><n>
-<c6>ARMOR<r> - <i161>
-<n><n>
-<c5>SWORD<r> - <i160>
-<n><n>
-<c14>HELMET<r> - <i177>
-]]
-
-items = [[
+item_page = [[
 <c15>ITEMS<r>
 <n><n>
-<c15>ITEMS<r> are consumables that apply a <c6>STATUS<r> to you when used.
-You can get them for free in <c15>TOWN<r>, but you can only carry so many.
+You can use <c15>ITEMS<r> in battle to give yourself a good <c6>STATUS<r>.
 <n><n>
 <c6>SHIELD<r> - <i161>x2
 <n><n>
 <c8>RESIN<r> - <i160>x2
 <n><n>
 <c14>SIGIL<r> - <i177>x2
+<n><n>
+<c15>ITEMS<r> are free in <c15>TOWN<r>, so use them liberally!
 ]]
 
-spells = [[
+spell_page = [[
 <c12>SPELLS<r>
 <n><n>
-<c12>SPELLS<r> are magical abilities that effect your enemies. You'll learn them from
-<c12>MAGICIANS<r> you meet on your quest.
+You can use <c12>SPELLS<r> in battle to give your opponent a bad <c6>STATUS<r>.
 <n><n>
-<c12>SPELLS<r> require <c12>MP<r>. You gain 1 <c12>MP<r> when you move to a new node,
-and your regain all <c12>MP<r> when you rest in <c15>TOWN<r>.
-]]
-
-spell_list = [[
-<c12>SPELL LIST<r>
-<n><n>
-
 <c8>CANDLE<r> - Apply <i176> to enemy.
 <n>
 <c14>DISPEL<r> - Apply <i177>x3 to enemy and remove <i162>, <i164> from them.
@@ -85,14 +114,32 @@ spell_list = [[
 <c2>CURSE<r> - Do 5 damage and apply <i162> to enemy.
 ]]
 
+equipment_page = [[
+<c15>EQUIPMENT<r>
+<n><n>
+<c15>EQUIPMENT<r> gives you a good <c6>STATUS<r> at the beginning of every battle.
+<n><n>
+<c6>ARMOR<r> - <i161>x1
+<n><n>
+<c5>SWORD<r> - <i160>x1
+<n><n>
+<c14>HELMET<r> - <i177>x1
+<n><n>
+You can by <c15>EQUIPMENT<r> in <c15>TOWN<r> using <c10>$<r>.
+]]
+
 pages = {
-  rich_text_parse(status_text, 112),
-  rich_text_parse(status_glossary_1, 112),
-  rich_text_parse(status_glossary_2, 112),
-  rich_text_parse(equipment, 112),
-  rich_text_parse(items, 112),
-  rich_text_parse(spells, 112),
-  rich_text_parse(spell_list, 112)
+  rich_text_parse(overworld_page, 112),
+  rich_text_parse(overworld_page_cont, 112),
+  rich_text_parse(battle_page, 112),
+  rich_text_parse(battle_page_cont, 112),
+  rich_text_parse(status_page, 112),
+  rich_text_parse(status_page_cont, 112),
+  rich_text_parse(status_list_page, 112),
+  rich_text_parse(status_list_page_cont, 112),
+  rich_text_parse(item_page, 112),
+  rich_text_parse(spell_page, 112),
+  rich_text_parse(equipment_page, 112)
 }
 
 index = 1

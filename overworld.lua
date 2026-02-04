@@ -21,9 +21,9 @@ function overworld_new()
   local battle_locations = {
     ["3,9"] = { enemy_goblin },
     ["1,9"] = { enemy_goblin_warrior, enemy_goblin },
-    ["1,11"] = { enemy_goblin_mage, enemy_goblin },
+    ["1,11"] = { enemy_goblin_mage, enemy_goblin_warrior },
     ["7,9"] = { enemy_goblin },
-    ["9,9"] = { enemy_goblin_warrior, enemy_goblin },
+    ["9,9"] = { enemy_goblin_mage, enemy_goblin_warrior },
     ["9,11"] = { enemy_goblin_warrior, enemy_goblin },
     ["11,11"] = { enemy_goblin_mage, enemy_goblin_warrior },
     ["9,7"] = { enemy_zombie, enemy_zombie },

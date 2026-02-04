@@ -3,6 +3,7 @@ function fairy_visit(fairy_flag)
     global.money += 2
     global.max_item_count += 1
     global.flags[fairy_flag] = true
+    global.player.hp = global.player.max_hp
     sfx(23)
   end
 end
@@ -177,7 +178,7 @@ The <c3>GOBLINS<r> have been hunting us, but some <c9>FAIRIES<r> still survive! 
 )
 
 fairy1 = dialogue_new(
-  function() return global.flags[flag_id.fairy1] and 2 end,
+  function() return global.flags[flag_id.fairy1] and 3 end,
   [[
 @page
 @background forest
@@ -187,6 +188,15 @@ fairy1 = dialogue_new(
 You found a <c11>FAIRY TREE<r>!
 <n><n>
 You also found <c10>$2<r> and an <c15>ITEM POUCH<r>!
+@body
+@option Continue
+
+@page
+@background forest
+@npc fairies
+@title <c6>NARRATOR<r>
+@body
+The healing power of the <c9>FAIRIES<r> restores your <c8>HP<r>!
 @body
 @option Continue
 @callback visit
@@ -208,7 +218,7 @@ We do not want to be changed!
 )
 
 fairy2 = dialogue_new(
-  function() return global.flags[flag_id.fairy2] and 2 end,
+  function() return global.flags[flag_id.fairy2] and 3 end,
   [[
 @page
 @background forest
@@ -218,6 +228,15 @@ fairy2 = dialogue_new(
 You found a <c11>FAIRY TREE<r>!
 <n><n>
 You also found <c10>$2<r> and an <c15>ITEM POUCH<r>!
+@body
+@option Continue
+
+@page
+@background forest
+@npc fairies
+@title <c6>NARRATOR<r>
+@body
+The healing power of the <c9>FAIRIES<r> restores your <c8>HP<r>!
 @body
 @option Continue
 @callback visit
@@ -239,7 +258,7 @@ We cower in fear of it.
 )
 
 fairy3 = dialogue_new(
-  function() return global.flags[flag_id.fairy3] and 2 end,
+  function() return global.flags[flag_id.fairy3] and 3 end,
   [[
 @page
 @background forest
@@ -249,6 +268,15 @@ fairy3 = dialogue_new(
 You found a <c11>FAIRY TREE<r>!
 <n><n>
 You also found <c10>$2<r> and an <c15>ITEM POUCH<r>!
+@body
+@option Continue
+
+@page
+@background forest
+@npc fairies
+@title <c6>NARRATOR<r>
+@body
+The healing power of the <c9>FAIRIES<r> restores your <c8>HP<r>!
 @body
 @option Continue
 @callback visit
